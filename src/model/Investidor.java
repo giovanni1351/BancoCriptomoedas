@@ -10,8 +10,10 @@ package model;
  */
 public class  Investidor extends Pessoa {
     private Carteira carteira;
-    public Investidor(String nome, String senha, long CPF) {
+    
+    public Investidor(String nome, long senha, long CPF) {
         super(nome, senha, CPF);
+        carteira = new Carteira();
     }
     
 }

@@ -9,5 +9,7 @@ package model;
  * @author unifgmorassi
  */
 public interface Tarifacao {
-    
+    public double tarifaCompra();
+    public double tarifaVenda();
+    public double atualizaCotacao();    
 }

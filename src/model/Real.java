@@ -12,5 +12,7 @@ package model;
 
 public class Real extends Moedas implements Tarifacao{
     
-    
+    public double tarifaCompra(){return 0;};
+    public double tarifaVenda(){ return 0;};
+    public double atualizaCotacao(){ return 0;};    
 }

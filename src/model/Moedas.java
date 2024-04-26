@@ -9,23 +9,25 @@ package model;
  * @author unifgmorassi
  */
 public class Moedas {
-    private double valorCotacao;
-    private double fracao;
+    private double cotacaoAtualParaReal;
+    private double quantidade;
 
-    public double getValorCotacao() {
-        return valorCotacao;
+    public double getCotacaoAtualParaReal() {
+        return cotacaoAtualParaReal;
     }
 
-    public void setValorCotacao(double valorCotacao) {
-        this.valorCotacao = valorCotacao;
+    public void setCotacaoAtualParaReal(double cotacaoAtualParaReal) {
+        this.cotacaoAtualParaReal = cotacaoAtualParaReal;
     }
 
-    public double getFracao() {
-        return fracao;
+    public double getQuantidade() {
+        return quantidade;
     }
 
-    public void setFracao(double fracao) {
-        this.fracao = fracao;
+    public void setQuantidade(double quantidade) {
+        this.quantidade = quantidade;
     }
+
+  
     
 }

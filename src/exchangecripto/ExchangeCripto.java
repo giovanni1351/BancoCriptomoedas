@@ -17,7 +17,6 @@ public class ExchangeCripto {
      */
     public static void main(String[] args) {
             LoginCadastro loginCadastro = new LoginCadastro();
-            
             loginCadastro.setVisible(true);
     }
     

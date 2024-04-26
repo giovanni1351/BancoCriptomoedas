@@ -4,18 +4,25 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author unifgmorassi
  */
 public class Pessoa {
-    private String nome,senha;
-    private long CPF;
+    private String nome;
+    private long CPF,senha;
+    private ArrayList<Transacao> extrato;  
+    
 
-    public Pessoa(String nome, String senha, long CPF) {
+    public Pessoa(String nome, long senha, long CPF) {
         this.nome = nome;
         this.senha = senha;
         this.CPF = CPF;
+        extrato =  new ArrayList<>();
+        
     }
 
     public String getNome() {
@@ -26,11 +33,11 @@ public class Pessoa {
         this.nome = nome;
     }
 
-    public String getSenha() {
+    public long getSenha() {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    public void setSenha(long senha) {
         this.senha = senha;
     }
 
@@ -41,6 +48,15 @@ public class Pessoa {
     public void setCPF(long CPF) {
         this.CPF = CPF;
     }
+
+    public ArrayList<Transacao> getExtrato() {
+        return extrato;
+    }
+
+    public void setExtrato(ArrayList<Transacao> extrato) {
+        this.extrato = extrato;
+    }
+    
     
 
 }
