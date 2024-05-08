@@ -35,6 +35,8 @@ public class Controller {
             if(procurado.getSenha() == senhaLong){
                 Menu funcoes = new Menu(procurado);
                 funcoes.setVisible(true);
+                loginCadastro.setVisible(false);
+                
             }          
         }
         }catch(NumberFormatException e){
