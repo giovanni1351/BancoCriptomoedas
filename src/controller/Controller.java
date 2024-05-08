@@ -9,6 +9,7 @@ import java.util.List;
 import model.CriarPessoa;
 import model.Investidor;
 import model.Pessoa;
+import view.Menu;
 import view.LoginCadastro;
 import view.Menu;
 
@@ -32,9 +33,8 @@ public class Controller {
         
         if(null != procurado){
             if(procurado.getSenha() == senhaLong){
-                menu = new Menu(procurado);
-            
-                menu.setVisible(true);
+                Menu funcoes = new Menu(procurado);
+                funcoes.setVisible(true);
             }          
         }
         }catch(NumberFormatException e){
