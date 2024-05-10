@@ -6,6 +6,7 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Pessoa;
 
@@ -20,7 +21,7 @@ public class PessoaDAO {
         this.conn = conn;
     }
     
-        public void cadastrar(Pessoa pessoa) throws SQLException{
+    public void cadastrar(Pessoa pessoa) throws SQLException{
         String sqlInsert = "INSERT INTO public.\"Pessoa\"(\"Nome\",\"CPF\",\"Senha\")"
                 + "VALUES (?,?,?)";
         PreparedStatement state = conn.prepareStatement(sqlInsert);
@@ -31,5 +32,25 @@ public class PessoaDAO {
         conn.close();
         
     }
+            
+    public ResultSet consultar(Pessoa Usuario) throws SQLException{
+//        String sql = "select * from aluno where usuario = '"+
+//                aluno.getUsuario()+ "' and senha = '"
+//                +aluno.getSenha();
+        
+
+//String sql2 = String.format("select * from aluno where usuario = '%s'"
+  //              + " and senha = '%s'", aluno.getUsuario(),aluno.getSenha());
+        
+        String sql = "select * from aluno where CPF = ? and Senha = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setLong(1, Usuario.getCPF());
+        statement.setLong(2, Usuario.getSenha());
+        statement.execute();
+        ResultSet resultado = statement.getResultSet();
+        return resultado;
+    }
+        
+        
     
 }
