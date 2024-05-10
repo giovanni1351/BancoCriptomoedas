@@ -42,7 +42,7 @@ public class PessoaDAO {
 //String sql2 = String.format("select * from aluno where usuario = '%s'"
   //              + " and senha = '%s'", aluno.getUsuario(),aluno.getSenha());
         
-        String sql = "select * from aluno where CPF = ? and Senha = ?";
+        String sql = "select * from public.\"Pessoa\" where \"CPF\" = ? and \"Senha\" = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setLong(1, Usuario.getCPF());
         statement.setLong(2, Usuario.getSenha());

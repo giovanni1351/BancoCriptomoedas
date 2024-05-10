@@ -25,6 +25,11 @@ public class Pessoa {
         
     }
 
+    public Pessoa(long CPF, long senha) {
+        this.CPF = CPF;
+        this.senha = senha;
+    }
+
     public String getNome() {
         return nome;
     }
