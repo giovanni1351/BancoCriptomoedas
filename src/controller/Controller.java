@@ -143,8 +143,11 @@ public class Controller {
         this.loginCadastro = loginCadastro;
     }
     public void verExtrato(){
-        menu.getTxtPrintInfos().setVisible(true);
-        menu.getScrollPrintInfos().setVisible(true);
+        String textoExtrato ="" ;
+        for(Extrato i : extrato){
+            textoExtrato+=(i.printar()+"\n");
+        }
+        menu.getTxtPrintInfos().setText(textoExtrato);
     }
 
 

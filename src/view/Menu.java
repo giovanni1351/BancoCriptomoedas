@@ -27,8 +27,7 @@ public class Menu extends javax.swing.JFrame {
     
     public void construir(){
         c.contruirMenu();
-        txtPrintInfos.setVisible(false);
-        scrollPrintInfos.setVisible(false);
+
     }
 
     public JScrollPane getScrollPrintInfos() {
