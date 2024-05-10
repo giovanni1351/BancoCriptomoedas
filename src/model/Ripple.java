@@ -9,6 +9,11 @@ package model;
  * @author unifgmorassi
  */
 public class Ripple extends Moedas implements Tarifacao {
+
+    public Ripple(double quantidade) {
+        super(quantidade);
+    }
+    
         
     public double tarifaCompra(){return 0;};
     public double tarifaVenda(){ return 0;};

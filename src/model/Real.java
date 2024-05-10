@@ -11,6 +11,10 @@ package model;
 
 
 public class Real extends Moedas implements Tarifacao{
+
+    public Real(double quantidade) {
+        super(quantidade);
+    }
     
     public double tarifaCompra(){return 0;};
     public double tarifaVenda(){ return 0;};

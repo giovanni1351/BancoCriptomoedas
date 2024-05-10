@@ -28,6 +28,10 @@ public class Moedas {
         this.quantidade = quantidade;
     }
 
+    public Moedas(double quantidade) {
+        this.quantidade = quantidade;
+    }
+    
   
     
 }

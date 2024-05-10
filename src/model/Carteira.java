@@ -17,11 +17,11 @@ public class Carteira {
     private Ripple ripple;
     private Bitcoin bitcoin;
 
-    public Carteira() {
-        eth = new Ethereum();
-        real = new Real();
-        ripple = new Ripple();
-        bitcoin = new Bitcoin();
+    public Carteira(double bitcoin,double ripple,double ethereum,double real){
+        eth = new Ethereum(ethereum);
+        this.real = new Real(real);
+        this.ripple = new Ripple(ripple);
+        this.bitcoin = new Bitcoin(bitcoin);
     }
     
     public Ethereum getEth() {

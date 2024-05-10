@@ -150,5 +150,15 @@ public class Controller {
             System.out.println(i.printar());
         }
     }
+    public Carteira carregaCarteira(long idUser) throws SQLException{
+        ResultSet resCarteira = pessoaDAO.consultarTabelaExtrato(idUser);
+        double bitcoin =0 ,ripple =0 ,ethereum =0,real =0;
+        bitcoin = resCarteira.getDouble("Bitcoin");
+        ripple = resCarteira.getDouble("Ripple");
+        ethereum = resCarteira.getDouble("Ethereum");
+        real = resCarteira.getDouble("Reais");
+        Carteira carteira = new Carteira(bitcoin,ripple,ethereum,real);
+        return carteira;
+    }
 
 }
