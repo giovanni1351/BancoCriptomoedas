@@ -5,8 +5,12 @@
 package view;
 
 import controller.Controller;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
@@ -20,8 +24,13 @@ public class LoginCadastro extends javax.swing.JFrame {
      * Creates new form LoginCadastro
      */
     public LoginCadastro() {
-        initComponents();
-        c = new Controller(this);
+        try {
+            initComponents();
+            
+            c = new Controller(this);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this,"Erro: "+ex);
+        }
     }
 
     public JTextField getPfSenhaCadastro() {

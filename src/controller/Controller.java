@@ -7,7 +7,6 @@ package controller;
 import DAO.Conexao;
 import DAO.PessoaDAO;
 import java.util.ArrayList;
-import model.CriarPessoa;
 import model.Investidor;
 import model.Pessoa;
 import view.LoginCadastro;
@@ -21,7 +20,6 @@ import java.sql.ResultSet;
  */
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -36,13 +34,13 @@ public class Controller {
     private Pessoa userAtual;
     private Carteira carteiraAtual;
     ArrayList<Extrato> extrato = new ArrayList<>();
-    
+    Pessoa userTentativa;
+    Connection connection;
+    PessoaDAO pessoaDAO;
 
     
-    public static ArrayList<Pessoa> users = new ArrayList<>();
     
     public void logarAbrirMenu(){
-        Conexao conexao = new Conexao();
 
         String cpf = loginCadastro.getTxtCpfLogin().getText();
         String senha = loginCadastro.getPfSenhaLogin().getText();
@@ -57,9 +55,9 @@ public class Controller {
                 loginCadastro.getTxtCpfLogin().setText("Digite apenas numeros");
                 loginCadastro.getLblAvisoErroSenha().setText("Digite apenas numeros");
             }
-            Pessoa userTentativa = new Pessoa(cpfLong,senhaLong);
-            Connection connection = conexao.getConnection();
-            PessoaDAO pessoaDAO = new PessoaDAO(connection);
+            
+            
+            userTentativa = new Pessoa(cpfLong,senhaLong);
             ResultSet res = pessoaDAO.consultar(userTentativa);
             if(res.next()){
                 JOptionPane.showMessageDialog(loginCadastro, "Login feito com sucesso ");
@@ -67,25 +65,15 @@ public class Controller {
                 Long senhaUser = res.getLong("Senha");
                 Long cpfUser = res.getLong("CPF");
                 Long idUser = res.getLong("PessoaID");
+                boolean isAdm = res.getBoolean("IsADM");                
+                carregaExtrato(idUser);
                 
-                boolean isAdm = res.getBoolean("IsADM");
-                JOptionPane.showMessageDialog(loginCadastro, nomeUser+senhaUser+cpfUser+idUser);
-                ResultSet resExtrato = pessoaDAO.consultarTabelaExtrato(idUser);
-                while(resExtrato.next()){
-                    String op = resExtrato.getString("operacao");
-                    Date data = resExtrato.getDate("Data");
-                    double valor = resExtrato.getDouble("valor");
-                    Long id = resExtrato.getLong("PessoaID");
-                    extrato.add(new Extrato(id,data,op,valor));
-                    
-                }
-                for(Extrato i: extrato){
-                    System.out.println(i.printar());
-                }
+               
                 if(isAdm){
                     userAtual = new Administrador(nomeUser, senhaUser, cpfUser);
                     configuraMenuADM();
                 }else{  
+                    
                     userAtual = new Investidor(nomeUser,senhaUser,cpfUser);
                     configuraMenu();
                 }
@@ -104,11 +92,7 @@ public class Controller {
             System.out.println(senha);
             long senhaLong = Long.parseLong(senha);
             long cpfLong = Long.parseLong(cpf);
-            Investidor novo = CriarPessoa.criarInvestidor(nome, senhaLong, cpfLong);
-            users.add(novo);
-            Conexao conexao = new Conexao();
-            Connection conn =conexao.getConnection();
-            PessoaDAO pessoaDAO = new PessoaDAO(conn);
+            Investidor novo = new Investidor(nome, senhaLong, cpfLong);
             pessoaDAO.cadastrar((Pessoa)novo);
             userAtual = novo;
             configuraMenu();
@@ -139,8 +123,11 @@ public class Controller {
 
         
     }
-    public Controller(LoginCadastro loginCadastro) {
+    public Controller(LoginCadastro loginCadastro) throws SQLException {
         this.loginCadastro = loginCadastro;
+        Conexao conexao = new Conexao();
+        connection = conexao.getConnection();
+        pessoaDAO = new PessoaDAO(connection);
     }
     public void verExtrato(){
         String textoExtrato ="" ;
@@ -149,6 +136,19 @@ public class Controller {
         }
         menu.getTxtPrintInfos().setText(textoExtrato);
     }
+    public void carregaExtrato(long idUser) throws SQLException{
+        ResultSet resExtrato = pessoaDAO.consultarTabelaExtrato(idUser);
+        while(resExtrato.next()){
+            String op = resExtrato.getString("operacao");
+            Date data = resExtrato.getDate("Data");
+            double valor = resExtrato.getDouble("valor");
+            Long id = resExtrato.getLong("PessoaID");
+            extrato.add(new Extrato(id,data,op,valor));
 
+        }
+        for(Extrato i: extrato){
+            System.out.println(i.printar());
+        }
+    }
 
 }

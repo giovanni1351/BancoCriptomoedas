@@ -51,6 +51,13 @@ public class PessoaDAO {
         ResultSet resultado = statement.getResultSet();
         return resultado;
     }
-        
+    public ResultSet consultarTabelaCarteira(long id) throws SQLException{
+        String sql = "select * from \"Carteira\" where \"PessoaID\" = ? ";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setLong(1, id);
+        statement.execute();
+        ResultSet resultado = statement.getResultSet();
+        return resultado;
+    }
     
 }
