@@ -93,7 +93,8 @@ public class Controller {
             long senhaLong = Long.parseLong(senha);
             long cpfLong = Long.parseLong(cpf);
             Investidor novo = new Investidor(nome, senhaLong, cpfLong);
-            pessoaDAO.cadastrar((Pessoa)novo);
+            long idNovo = pessoaDAO.cadastrar((Pessoa)novo);
+            //pessoaDAO.cadastrarCarteira(idNovo, 0, 0, 0, 0);
             userAtual = novo;
             configuraMenu();
         }catch(NumberFormatException e){
