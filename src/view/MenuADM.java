@@ -4,6 +4,8 @@
  */
 package view;
 
+import controller.Controller;
+
 /**
  *
  * @author kingdra
@@ -13,8 +15,17 @@ public class MenuADM extends javax.swing.JFrame {
     /**
      * Creates new form MenuADM
      */
+    Controller c;
     public MenuADM() {
         initComponents();
+    }
+
+    public Controller getC() {
+        return c;
+    }
+
+    public void setC(Controller c) {
+        this.c = c;
     }
 
     /**
@@ -203,9 +214,9 @@ public class MenuADM extends javax.swing.JFrame {
                     .addComponent(txtNomeCripto2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btAtualizarCripto)
-                    .addComponent(btAtualizarAllCriptos))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btAtualizarAllCriptos)
+                    .addComponent(btAtualizarCripto))
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 

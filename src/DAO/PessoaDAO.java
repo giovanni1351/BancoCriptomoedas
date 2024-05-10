@@ -34,14 +34,6 @@ public class PessoaDAO {
     }
             
     public ResultSet consultar(Pessoa Usuario) throws SQLException{
-//        String sql = "select * from aluno where usuario = '"+
-//                aluno.getUsuario()+ "' and senha = '"
-//                +aluno.getSenha();
-        
-
-//String sql2 = String.format("select * from aluno where usuario = '%s'"
-  //              + " and senha = '%s'", aluno.getUsuario(),aluno.getSenha());
-        
         String sql = "select * from public.\"Pessoa\" where \"CPF\" = ? and \"Senha\" = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setLong(1, Usuario.getCPF());
@@ -51,6 +43,14 @@ public class PessoaDAO {
         return resultado;
     }
         
+    public ResultSet consultarTabelaExtrato(long id) throws SQLException{
+        String sql = "select * from \"Extrato\" where \"PessoaID\" = ? ";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setLong(1, id);
+        statement.execute();
+        ResultSet resultado = statement.getResultSet();
+        return resultado;
+    }
         
     
 }
