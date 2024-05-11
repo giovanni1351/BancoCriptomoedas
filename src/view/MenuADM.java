@@ -63,9 +63,6 @@ public class MenuADM extends javax.swing.JFrame {
         btAtualizarUsers = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaUsuarios = new javax.swing.JTextArea();
-        btDeletarUser = new javax.swing.JButton();
-        btSaldoUser = new javax.swing.JButton();
-        btExtratoUser = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -75,6 +72,11 @@ public class MenuADM extends javax.swing.JFrame {
         txtCPFInvestidor = new java.awt.TextField();
         txtSenhaInvestidor = new java.awt.TextField();
         btCadastrarInvestidor = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        txtCPFDeletar = new java.awt.TextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -235,27 +237,6 @@ public class MenuADM extends javax.swing.JFrame {
         txtAreaUsuarios.setRows(5);
         jScrollPane1.setViewportView(txtAreaUsuarios);
 
-        btDeletarUser.setText("Deletar conta");
-        btDeletarUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDeletarUserActionPerformed(evt);
-            }
-        });
-
-        btSaldoUser.setText("Consultar saldo");
-        btSaldoUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSaldoUserActionPerformed(evt);
-            }
-        });
-
-        btExtratoUser.setText("Consultar extrato");
-        btExtratoUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btExtratoUserActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -270,14 +251,6 @@ public class MenuADM extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(176, 176, 176)
-                .addComponent(btDeletarUser)
-                .addGap(74, 74, 74)
-                .addComponent(btSaldoUser)
-                .addGap(64, 64, 64)
-                .addComponent(btExtratoUser)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,12 +261,7 @@ public class MenuADM extends javax.swing.JFrame {
                     .addComponent(btAtualizarUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(48, 48, 48)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btDeletarUser)
-                    .addComponent(btSaldoUser)
-                    .addComponent(btExtratoUser))
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addContainerGap(224, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Usuarios", jPanel1);
@@ -361,6 +329,48 @@ public class MenuADM extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Cadastrar investidores", jPanel3);
 
+        jLabel14.setText("Deletar usuarios cadastrados");
+
+        jLabel15.setText("CPF:");
+
+        txtCPFDeletar.setEditable(false);
+
+        jButton1.setText("Deletar");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(273, 273, 273)
+                        .addComponent(jLabel15)
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(txtCPFDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(381, 381, 381)
+                        .addComponent(jButton1)))
+                .addContainerGap(327, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jLabel14)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15)
+                    .addComponent(txtCPFDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addComponent(jButton1)
+                .addContainerGap(403, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Deletar Usuarios", jPanel4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -386,18 +396,6 @@ public class MenuADM extends javax.swing.JFrame {
     private void btAtualizarUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarUsersActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btAtualizarUsersActionPerformed
-
-    private void btDeletarUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btDeletarUserActionPerformed
-
-    private void btSaldoUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaldoUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSaldoUserActionPerformed
-
-    private void btExtratoUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExtratoUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btExtratoUserActionPerformed
 
     private void btDeletarCriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarCriptoActionPerformed
         // TODO add your handling code here:
@@ -457,15 +455,15 @@ public class MenuADM extends javax.swing.JFrame {
     private javax.swing.JButton btCadastrarCripto;
     private javax.swing.JButton btCadastrarInvestidor;
     private javax.swing.JButton btDeletarCripto;
-    private javax.swing.JButton btDeletarUser;
-    private javax.swing.JButton btExtratoUser;
     private javax.swing.JButton btListarUsers;
-    private javax.swing.JButton btSaldoUser;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -477,9 +475,11 @@ public class MenuADM extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea txtAreaUsuarios;
+    private java.awt.TextField txtCPFDeletar;
     private java.awt.TextField txtCPFInvestidor;
     private java.awt.TextField txtCompraCripto;
     private java.awt.TextField txtCotacaoCripto;
