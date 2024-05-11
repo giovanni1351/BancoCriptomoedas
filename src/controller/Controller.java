@@ -161,5 +161,8 @@ public class Controller {
         Carteira carteira = new Carteira(bitcoin,ripple,ethereum,real);
         return carteira;
     }
-
+    public void addMoedaComboBox(){
+        var comboBox = loginCadastro.getCombo();
+        comboBox.addItem("Givas");
+    }
 }
