@@ -94,6 +94,7 @@ public class Controller {
             long cpfLong = Long.parseLong(cpf);
             Investidor novo = new Investidor(nome, senhaLong, cpfLong);
             long idNovo = pessoaDAO.cadastrar((Pessoa)novo);
+            System.out.println(idNovo);
             //pessoaDAO.cadastrarCarteira(idNovo, 0, 0, 0, 0);
             userAtual = novo;
             configuraMenu();
@@ -161,8 +162,5 @@ public class Controller {
         Carteira carteira = new Carteira(bitcoin,ripple,ethereum,real);
         return carteira;
     }
-    public void addMoedaComboBox(){
-        var comboBox = loginCadastro.getCombo();
-        comboBox.addItem("Givas");
-    }
+
 }
