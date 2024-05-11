@@ -70,15 +70,10 @@ public class PessoaDAO {
         ResultSet resultado = statement.getResultSet();
         return resultado;
     }
-    public void cadastrarCarteira(long id,double bitcoin,double ripple,double ethereum,double reais) throws SQLException{
-        String sql = "INSERT INTO public.\"Carteira\"(\"PessoaID\",\"Bitcoin\",\"Ripple\",\"Ethereum\",\"Reais\")"
-                + "VALUES(\"?\",\"?\",\"?\",\"?\",\"?\")";
+    public void cadastrarCarteira(long id) throws SQLException{
+        String sql = "INSERT INTO public.\"Carteira\"(\"PessoaID\")\n VALUES (?);";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setLong(1, id);
-        statement.setDouble(2, bitcoin);
-        statement.setDouble(3, ripple);
-        statement.setDouble(4, ethereum);
-        statement.setDouble(5, reais);
         statement.execute();
     }
     

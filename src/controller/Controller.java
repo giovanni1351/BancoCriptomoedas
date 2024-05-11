@@ -95,7 +95,7 @@ public class Controller {
             Investidor novo = new Investidor(nome, senhaLong, cpfLong);
             long idNovo = pessoaDAO.cadastrar((Pessoa)novo);
             System.out.println(idNovo);
-            //pessoaDAO.cadastrarCarteira(idNovo, 0, 0, 0, 0);
+            pessoaDAO.cadastrarCarteira(idNovo);
             userAtual = novo;
             configuraMenu();
         }catch(NumberFormatException e){
