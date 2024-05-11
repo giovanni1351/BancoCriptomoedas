@@ -5,7 +5,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -14,17 +13,31 @@ import java.util.List;
 public class Pessoa {
     private String nome;
     private long CPF,senha;
-    private ArrayList<Transacao> extrato;  
-    
+    private long id;
 
+    public Pessoa(String nome, long senha, long CPF,long id) {
+        this.nome = nome;
+        this.senha = senha;
+        this.CPF = CPF;
+        this.id = id;
+
+        
+    }
     public Pessoa(String nome, long senha, long CPF) {
         this.nome = nome;
         this.senha = senha;
         this.CPF = CPF;
-        extrato =  new ArrayList<>();
         
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     public Pessoa(long CPF, long senha) {
         this.CPF = CPF;
         this.senha = senha;
@@ -54,24 +67,20 @@ public class Pessoa {
         this.CPF = CPF;
     }
 
-    public ArrayList<Transacao> getExtrato() {
-        return extrato;
-    }
 
-    public void setExtrato(ArrayList<Transacao> extrato) {
-        this.extrato = extrato;
-    }
     
     public String printarInformacoes(){
         String infos = String.format("Nome: %s\nCPF: %d\n",nome,CPF);
         return infos;
     }
-    
-    
+
     @Override
     public String toString() {
-        return "Pessoa{" + "nome=" + nome + ", CPF=" + CPF + ", senha=" + senha + ", extrato=" + extrato + '}';
+        return "Pessoa{" + "nome=" + nome + ", CPF=" + CPF + ", senha=" + senha + ", id=" + id + '}';
     }
+    
+    
+
     
     
 

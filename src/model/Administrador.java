@@ -10,8 +10,10 @@ package model;
  */
 public class Administrador extends Pessoa{
     
-    public Administrador(String nome, long senha, long CPF) {
-        super(nome, senha, CPF);
+
+
+    public Administrador(String nome, long senha, long CPF, long id) {
+        super(nome, senha, CPF, id);
     }
     
 }

@@ -10,11 +10,17 @@ package model;
  */
 public class  Investidor extends Pessoa {
     private Carteira carteira;
-    
+
+    public Investidor(String nome, long senha, long CPF, long id) {
+        super(nome, senha, CPF, id);
+        carteira = new Carteira(0,0,0,0);
+
+    }
+
     public Investidor(String nome, long senha, long CPF) {
         super(nome, senha, CPF);
-        carteira = new Carteira(0,0,0,0);
     }
+    
     @Override
     public String printarInformacoes(){
         String infos = String.format("Nome: %s\n"

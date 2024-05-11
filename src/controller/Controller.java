@@ -70,11 +70,11 @@ public class Controller {
                 
                
                 if(isAdm){
-                    userAtual = new Administrador(nomeUser, senhaUser, cpfUser);
+                    userAtual = new Administrador(nomeUser, senhaUser, cpfUser,idUser);
                     configuraMenuADM();
                 }else{  
                     
-                    userAtual = new Investidor(nomeUser,senhaUser,cpfUser);
+                    userAtual = new Investidor(nomeUser,senhaUser,cpfUser,idUser);
                     configuraMenu();
                 }
             }
@@ -94,6 +94,7 @@ public class Controller {
             long cpfLong = Long.parseLong(cpf);
             Investidor novo = new Investidor(nome, senhaLong, cpfLong);
             long idNovo = pessoaDAO.cadastrar((Pessoa)novo);
+            novo.setId(idNovo);
             System.out.println(idNovo);
             pessoaDAO.cadastrarCarteira(idNovo);
             userAtual = novo;
@@ -109,8 +110,7 @@ public class Controller {
     public void contruirMenu(){
         String nome = userAtual.getNome();
         menu.getLblName().setText("Seja bem vindo " + nome);
-        menu.getTxtInformacoesUsuario().setText(userAtual.printarInformacoes());
-        
+               
     }
     private void configuraMenu(){
         menu.setC(this);
@@ -132,11 +132,26 @@ public class Controller {
         pessoaDAO = new PessoaDAO(connection);
     }
     public void verExtrato(){
-        String textoExtrato ="" ;
-        for(Extrato i : extrato){
-            textoExtrato+=(i.printar()+"\n");
+        System.out.println(extrato.size());
+
+
+        var tabela= menu.getTabelaExtrato().getModel();
+        for(int x = 0;x < extrato.size();x++){
+
+            Extrato atual = extrato.get(x);
+            tabela.setValueAt(atual.getData(), x, 0);
+            tabela.setValueAt(atual.getOperacao(), x, 1);
+            tabela.setValueAt(atual.getValor(), x, 2);
+            tabela.setValueAt(atual.getTaxa(), x, 3);
+            tabela.setValueAt(atual.getMoeda(), x, 4);
+            tabela.setValueAt(atual.getSaldo(), x, 5);
+
         }
-        menu.getTxtPrintInfos().setText(textoExtrato);
+        //String textoExtrato ="" ;
+        //for(Extrato i : extrato){
+          //  textoExtrato+=(i.printar()+"\n");
+        //}
+        //menu.getTxtPrintInfos().setText(textoExtrato);
     }
     public void carregaExtrato(long idUser) throws SQLException{
         ResultSet resExtrato = pessoaDAO.consultarTabelaExtrato(idUser);
@@ -144,9 +159,11 @@ public class Controller {
             String op = resExtrato.getString("operacao");
             Date data = resExtrato.getDate("Data");
             double valor = resExtrato.getDouble("valor");
-            Long id = resExtrato.getLong("PessoaID");
-            extrato.add(new Extrato(id,data,op,valor));
-
+            double taxa = resExtrato.getDouble("taxa");
+            String moeda = resExtrato.getString("moeda");
+            double saldo = resExtrato.getDouble("saldo");
+            extrato.add(new Extrato(data,op,valor,taxa,saldo,moeda));
+//ublic Extrato(Date data, String operacao, double valor, double taxa, double saldo, String moeda) {
         }
         for(Extrato i: extrato){
             System.out.println(i.printar());

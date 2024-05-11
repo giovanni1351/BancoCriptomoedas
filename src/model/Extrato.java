@@ -11,25 +11,49 @@ import java.util.Date;
  * @author giova
  */
 public class Extrato {
-    private Long pessoaID;
     private Date data;
     private String operacao;
     private double valor;
+    private double taxa;
+    private double saldo;
+    private String moeda;
 
-    public Extrato(Long pessoaID, Date data, String operacao, double valor) {
-        this.pessoaID = pessoaID;
+    public Extrato(Date data, String operacao, double valor, double taxa, double saldo, String moeda) {
         this.data = data;
         this.operacao = operacao;
         this.valor = valor;
-    }
-    
-    public Long getPessoaID() {
-        return pessoaID;
+        this.taxa = taxa;
+        this.saldo = saldo;
+        this.moeda = moeda;
     }
 
-    public void setPessoaID(Long pessoaID) {
-        this.pessoaID = pessoaID;
+    public double getTaxa() {
+        return taxa;
     }
+
+    public void setTaxa(double taxa) {
+        this.taxa = taxa;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public String getMoeda() {
+        return moeda;
+    }
+
+    public void setMoeda(String moeda) {
+        this.moeda = moeda;
+    }
+
+    
+    
+
 
     public Date getData() {
         return data;
@@ -61,12 +85,12 @@ public class Extrato {
                 ,data.getDay(),data.getMonth(),data.getYear(),operacao,valor);
         return texto;
     }
-    
-    
+
     @Override
     public String toString() {
-        return "Extrato{" + "pessoaID=" + pessoaID + ", data=" + data + ", operacao=" + operacao + ", valor=" + valor + '}';
+        return "Extrato{" + "data=" + data + ", operacao=" + operacao + ", valor=" + valor + ", taxa=" + taxa + ", saldo=" + saldo + ", moeda=" + moeda + '}';
     }
     
     
+
 }
