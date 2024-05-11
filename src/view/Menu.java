@@ -5,10 +5,12 @@
 package view;
 
 import controller.Controller;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
@@ -32,6 +34,54 @@ public class Menu extends javax.swing.JFrame {
 
     }
 
+    public JComboBox<String> getComboBoxMoedas() {
+        return comboBoxMoedas;
+    }
+
+    public void setComboBoxMoedas(JComboBox<String> comboBoxMoedas) {
+        this.comboBoxMoedas = comboBoxMoedas;
+    }
+
+    public JLabel getLblFracaoAtual() {
+        return lblFracaoAtual;
+    }
+
+    public void setLblFracaoAtual(JLabel lblFracaoAtual) {
+        this.lblFracaoAtual = lblFracaoAtual;
+    }
+
+    public JLabel getLblPrecoUnidade() {
+        return lblPrecoUnidade;
+    }
+
+    public void setLblPrecoUnidade(JLabel lblPrecoUnidade) {
+        this.lblPrecoUnidade = lblPrecoUnidade;
+    }
+
+    public JLabel getLblSaldoAtual() {
+        return lblSaldoAtual;
+    }
+
+    public void setLblSaldoAtual(JLabel lblSaldoAtual) {
+        this.lblSaldoAtual = lblSaldoAtual;
+    }
+
+    public JTextField getTxtValorCompra() {
+        return txtValorCompra;
+    }
+
+    public void setTxtValorCompra(JTextField txtValorCompra) {
+        this.txtValorCompra = txtValorCompra;
+    }
+
+    public JTextField getTxtValorVenda() {
+        return txtValorVenda;
+    }
+
+    public void setTxtValorVenda(JTextField txtValorVenda) {
+        this.txtValorVenda = txtValorVenda;
+    }
+    
 
     public Controller getC() {
         return c;
@@ -103,7 +153,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comboBoxMoedas = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         lblPrecoUnidade = new javax.swing.JLabel();
         lblFracaoAtual = new javax.swing.JLabel();
@@ -387,8 +437,8 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bitcoin", "Ethereum", "Ripple" }));
-        jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        comboBoxMoedas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bitcoin", "Ethereum", "Ripple" }));
+        comboBoxMoedas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
 
@@ -433,7 +483,7 @@ public class Menu extends javax.swing.JFrame {
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(comboBoxMoedas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -448,7 +498,7 @@ public class Menu extends javax.swing.JFrame {
                     .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel9Layout.createSequentialGroup()
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(comboBoxMoedas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(326, Short.MAX_VALUE))
@@ -635,13 +685,13 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JTabbedPane Tabbed;
     private javax.swing.JButton btDepositar;
     private javax.swing.JButton btSacar;
+    private javax.swing.JComboBox<String> comboBoxMoedas;
     private javax.swing.ButtonGroup groupBitcoin;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

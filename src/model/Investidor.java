@@ -17,6 +17,11 @@ public class  Investidor extends Pessoa {
 
     }
 
+    public Investidor(String nome, long senha, long CPF, long id,Carteira carteira) {
+        super(nome, senha, CPF, id);
+        this.carteira = carteira;
+    }
+
     public Investidor(String nome, long senha, long CPF) {
         super(nome, senha, CPF);
     }
@@ -37,4 +42,10 @@ public class  Investidor extends Pessoa {
         return infos;
     
     }
+
+    @Override
+    public String toString() {
+        return "Investidor{" + "carteira=" + carteira + '}';
+    }
+    
 }

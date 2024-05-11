@@ -73,8 +73,8 @@ public class Controller {
                     userAtual = new Administrador(nomeUser, senhaUser, cpfUser,idUser);
                     configuraMenuADM();
                 }else{  
-                    
-                    userAtual = new Investidor(nomeUser,senhaUser,cpfUser,idUser);
+                    userAtual = new Investidor(nomeUser,senhaUser,cpfUser,idUser,carregaCarteira(idUser));
+                    System.out.println(userAtual);
                     configuraMenu();
                 }
             }
@@ -170,14 +170,18 @@ public class Controller {
         }
     }
     public Carteira carregaCarteira(long idUser) throws SQLException{
-        ResultSet resCarteira = pessoaDAO.consultarTabelaExtrato(idUser);
+        ResultSet resCarteira = pessoaDAO.consultarTabelaCarteira(idUser);
         double bitcoin =0 ,ripple =0 ,ethereum =0,real =0;
-        bitcoin = resCarteira.getDouble("Bitcoin");
-        ripple = resCarteira.getDouble("Ripple");
-        ethereum = resCarteira.getDouble("Ethereum");
-        real = resCarteira.getDouble("Reais");
+        if(resCarteira.next()){
+            bitcoin = resCarteira.getDouble("Bitcoin");
+            ripple = resCarteira.getDouble("Ripple");
+            ethereum = resCarteira.getDouble("Ethereum");
+            real = resCarteira.getDouble("Reais");
+        }
         Carteira carteira = new Carteira(bitcoin,ripple,ethereum,real);
         return carteira;
     }
-
+    public void clicouEmComprar(){
+        
+    }
 }

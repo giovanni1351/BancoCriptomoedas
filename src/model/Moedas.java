@@ -31,6 +31,11 @@ public class Moedas {
     public Moedas(double quantidade) {
         this.quantidade = quantidade;
     }
+
+    @Override
+    public String toString() {
+        return "Moedas{" + "cotacaoAtualParaReal=" + cotacaoAtualParaReal + ", quantidade=" + quantidade + '}';
+    }
     
   
     

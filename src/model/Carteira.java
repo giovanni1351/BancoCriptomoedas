@@ -55,6 +55,11 @@ public class Carteira {
     public void setBitcoin(Bitcoin bitcoin) {
         this.bitcoin = bitcoin;
     }
+
+    @Override
+    public String toString() {
+        return "Carteira{" + "eth=" + eth + ", real=" + real + ", ripple=" + ripple + ", bitcoin=" + bitcoin + '}';
+    }
     
     
 
