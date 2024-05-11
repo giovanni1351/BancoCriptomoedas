@@ -84,6 +84,13 @@ public class MenuADM extends javax.swing.JFrame {
         btConsultarSaldos = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAreaConsultarSaldos = new javax.swing.JTextArea();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        txtCPFConsultarExtrato = new java.awt.TextField();
+        btConsultarExtratos = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtAreaConsultarExtrato = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -343,6 +350,11 @@ public class MenuADM extends javax.swing.JFrame {
         txtCPFDeletar.setEditable(false);
 
         jButton1.setText("Deletar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -432,6 +444,63 @@ public class MenuADM extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Consultar Saldos", jPanel5);
 
+        jLabel18.setText("Consultar extratos de usuarios");
+
+        jLabel19.setText("CPF:");
+
+        btConsultarExtratos.setLabel("Consultar");
+        btConsultarExtratos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarExtratosActionPerformed(evt);
+            }
+        });
+
+        txtAreaConsultarExtrato.setColumns(20);
+        txtAreaConsultarExtrato.setRows(5);
+        jScrollPane3.setViewportView(txtAreaConsultarExtrato);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btConsultarExtratos)
+                .addGap(372, 372, 372))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(276, 276, 276)
+                        .addComponent(jLabel19)
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtCPFConsultarExtrato, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(37, 37, 37))))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(200, 200, 200)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(213, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(jLabel18)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel19)
+                    .addComponent(txtCPFConsultarExtrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(btConsultarExtratos)
+                .addGap(34, 34, 34)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(139, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Consultar Extratos", jPanel6);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -474,6 +543,14 @@ public class MenuADM extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btCadastrarInvestidorActionPerformed
 
+    private void btConsultarExtratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarExtratosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btConsultarExtratosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -515,6 +592,7 @@ public class MenuADM extends javax.swing.JFrame {
     private javax.swing.JButton btAtualizarUsers;
     private javax.swing.JButton btCadastrarCripto;
     private javax.swing.JButton btCadastrarInvestidor;
+    private javax.swing.JButton btConsultarExtratos;
     private javax.swing.JButton btConsultarSaldos;
     private javax.swing.JButton btDeletarCripto;
     private javax.swing.JButton btListarUsers;
@@ -528,6 +606,8 @@ public class MenuADM extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -541,11 +621,15 @@ public class MenuADM extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextArea txtAreaConsultarExtrato;
     private javax.swing.JTextArea txtAreaConsultarSaldos;
     private javax.swing.JTextArea txtAreaUsuarios;
+    private java.awt.TextField txtCPFConsultarExtrato;
     private java.awt.TextField txtCPFConsultarSaldos;
     private java.awt.TextField txtCPFDeletar;
     private java.awt.TextField txtCPFInvestidor;
