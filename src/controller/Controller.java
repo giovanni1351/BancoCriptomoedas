@@ -39,7 +39,9 @@ public class Controller {
     Connection connection;
     PessoaDAO pessoaDAO;
     private double fracaoDeVenda =0;
+    private double fracaoDeCompra =0;
     private int indiceMoedaVenda = 0;
+    private int indiceMoedaCompra = 0;
 
     
     
@@ -102,7 +104,7 @@ public class Controller {
             System.out.println(idNovo);
             pessoaDAO.cadastrarCarteira(idNovo);
             userAtual = novo;
-            configuraMenu();
+            //configuraMenu();
         }catch(NumberFormatException e){
             loginCadastro.getTxtCpfCadastro().setText("Digite apenas numeros");
             loginCadastro.getLblAvisoErroSenha1().setText("Digite apenas numeros");
@@ -216,6 +218,35 @@ public class Controller {
         menu.getTxtDisplayValorVenda().setText(String.format("R$:%.2f",valorDeVenda));
         
     }
+    public void calculaCompra(){
+        String valor = menu.getTxtValorCompra().getText();
+        int index = menu.getComboBoxMoedas().getSelectedIndex();  
+        indiceMoedaCompra = index;
+        System.out.println(index);
+        
+        
+        String moeda = menu.getComboBoxMoedas().getItemAt(index);
+        System.out.println(moeda);
+        
+        double valorDouble =0;
+        try{
+            valorDouble = Double.parseDouble(valor);
+            fracaoDeCompra = valorDouble;
+        }catch(NumberFormatException e){
+            menu.getTxtValorCompra().setText("Digite apenas numeros");
+        }
+        Moedas moedaSelecionada = carteiraAtual.getMoeda(index);
+        
+        double valorDeCompra =valorDouble*moedaSelecionada.getCotacaoAtualParaReal()
+                *moedaSelecionada.tarifaCompra();
+        menu.getLblDisplayValorCompra().setText(String.format("R$:%.2f",valorDeCompra));
+        
+    }
+    
+    
+    
+    
+    
     
     public void venderMoedas(){
         int index = menu.getComboBoxMoedas().getSelectedIndex();  
@@ -252,6 +283,40 @@ public class Controller {
         }
     }
     
+    public void comprarMoedas(){
+        int index = menu.getComboBoxMoedas().getSelectedIndex();  
+        if(index == indiceMoedaCompra && fracaoDeCompra >0){
+            Moedas moedaAtual= carteiraAtual.getMoeda(index);
+            double valorEmReais = fracaoDeCompra * moedaAtual.getCotacaoAtualParaReal();
+            valorEmReais*=moedaAtual.tarifaCompra();
+            System.out.println("Valor da compra: "+valorEmReais);
+            double reaisAtual = carteiraAtual.getReal().getQuantidade();
+            double fracaoMoedaAtual = carteiraAtual.getMoeda(index).getQuantidade();
+            
+            if(valorEmReais< reaisAtual){
+                int confirmou = JOptionPane.showConfirmDialog(menu, "Gostaria mesmo de comprar?");
+                if(confirmou ==0){
+                    carteiraAtual.getReal().setQuantidade(reaisAtual-valorEmReais);
+                    carteiraAtual.getMoeda(index).setQuantidade(fracaoMoedaAtual+fracaoDeCompra);
+                    try{
+                        pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,
+                                "Comprou",fracaoDeCompra,moedaAtual.tarifaCompra(),
+                                reaisAtual,menu.getComboBoxMoedas().getItemAt(index)
+                        ));
+                        pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
+                    }catch(SQLException e){
+                        JOptionPane.showMessageDialog(menu, "Erro de Sql"+e);
+
+                    }
+                    JOptionPane.showMessageDialog(menu, "Compra concluida");
+                    atualizaSaldoTela();
+
+                }
+            }else{
+                JOptionPane.showMessageDialog(menu, "Saldo insuficiente!");
+            }
+        }
+    }
     
     public void atualizaSaldoTela(){
         int index = menu.getComboBoxMoedas().getSelectedIndex();
