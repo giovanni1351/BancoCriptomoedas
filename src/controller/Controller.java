@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import model.Administrador;
 import model.Carteira;
 import model.Extrato;
+import model.Moedas;
 import view.MenuADM;
 public class Controller {
     private final LoginCadastro loginCadastro;
@@ -73,7 +74,8 @@ public class Controller {
                     userAtual = new Administrador(nomeUser, senhaUser, cpfUser,idUser);
                     configuraMenuADM();
                 }else{  
-                    userAtual = new Investidor(nomeUser,senhaUser,cpfUser,idUser,carregaCarteira(idUser));
+                    carteiraAtual = carregaCarteira(idUser);
+                    userAtual = new Investidor(nomeUser,senhaUser,cpfUser,idUser,carteiraAtual);
                     System.out.println(userAtual);
                     configuraMenu();
                 }
@@ -183,5 +185,43 @@ public class Controller {
     }
     public void clicouEmComprar(){
         
+    }
+    public void calcularVenda(){
+        String valor = menu.getTxtValorVenda().getText();
+        int index = menu.getComboBoxMoedas().getSelectedIndex();       
+        System.out.println(index);
+        
+        String moeda = menu.getComboBoxMoedas().getItemAt(index);
+        System.out.println(moeda);
+        double valorDouble =0;
+        try{
+            valorDouble = Double.parseDouble(valor);
+        }catch(NumberFormatException e){
+            menu.getTxtValorVenda().setText("Digite apenas numeros");
+        }
+        Moedas moedaSelecionada = carteiraAtual.getMoeda(index);
+        moedaSelecionada.atualizaCotacao();
+        menu.getTxtDisplayValorVenda().setText("R$:"+valorDouble*
+                moedaSelecionada.getCotacaoAtualParaReal());
+        
+    }
+    public void atualizaSaldoTela(){
+        int index = menu.getComboBoxMoedas().getSelectedIndex();
+        System.out.println(index);
+        var lblNomeMoeda = menu.getLblNomeMoedaOlhada();
+        var lblsaldo = menu.getLblSaldoAtual();
+        var lblfracaoAtual = menu.getLblFracaoAtual();
+        var lblcotacaoMoeda = menu.getLblPrecoUnidade();
+        var lblsaldocripto = menu.getLblSaldoCripto();
+        lblsaldo.setText("Saldo atual:"+carteiraAtual.getReal().getQuantidade());
+        lblNomeMoeda.setText(menu.getComboBoxMoedas().getItemAt(index));
+        //Fração:
+        //Preco unidade:
+        Moedas moedaSelecionada = carteiraAtual.getMoeda(index);
+        lblfracaoAtual.setText("Fração:"+moedaSelecionada.getQuantidade());
+        lblcotacaoMoeda.setText("Preco unidade:"+moedaSelecionada.atualizaCotacao());
+        double valor = moedaSelecionada.getQuantidade()*moedaSelecionada.atualizaCotacao();
+        lblsaldocripto.setText("Saldo Cripto:"+valor);
+
     }
 }

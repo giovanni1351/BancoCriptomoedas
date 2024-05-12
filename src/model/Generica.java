@@ -6,15 +6,14 @@ package model;
 
 /**
  *
- * @author unifgmorassi
+ * @author Givas
  */
-public class Bitcoin extends Moedas implements Tarifacao{
-
-    public Bitcoin(double quantidade) {
+public class Generica extends Moedas implements Tarifacao{
+    private String nome;
+    public Generica(double quantidade) {
         super(quantidade);
     }
-        
-
+    
     @Override
     public double tarifaCompra(){return 1.0;};
     @Override
@@ -30,4 +29,5 @@ public class Bitcoin extends Moedas implements Tarifacao{
         return this.getCotacaoAtualParaReal();
     
     };    
+    
 }

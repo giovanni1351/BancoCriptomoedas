@@ -13,10 +13,21 @@ public class Ethereum extends Moedas implements Tarifacao {
     public Ethereum(double quantidade) {
         super(quantidade);
     }
+
+    @Override
+    public double tarifaCompra(){return 1.0;};
+    @Override
+    public double tarifaVenda(){ return 1.0;};
+    @Override
+    public double atualizaCotacao(){
+        double porcento = Math.random();
+
+        if(this.getCotacaoAtualParaReal()==0){
+            this.setCotacaoAtualParaReal(100000*porcento); 
+        };
+        
+        return this.getCotacaoAtualParaReal();
     
-    public double tarifaCompra(){return 0;};
-    public double tarifaVenda(){ return 0;};
-    public double atualizaCotacao(){ return 0;};  
-    
+    };    
 
 }

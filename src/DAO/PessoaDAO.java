@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import model.Carteira;
 import model.Pessoa;
 
 /**
@@ -76,5 +78,26 @@ public class PessoaDAO {
         statement.setLong(1, id);
         statement.execute();
     }
-    
+
+    public void atualizarColunaCarteira(long id,String nome,double valor) throws SQLException{
+        String sql = "UPDATE public.\"Carteira\""+
+	"SET  ?=?"+
+	"WHERE \"PessoaID\"=?;";
+        PreparedStatement comando = conn.prepareStatement(sql);
+        comando.setString(1,nome);
+        comando.setDouble(2, valor);
+        comando.setLong(3,id);
+        comando.execute();
+
+    }
+    public void atualizarCarteira(long id,Carteira user,ArrayList<String> moedas) throws SQLException{
+        
+        String sql = "UPDATE public.\"Carteira\"\n" +
+"	SET \n"
+                + "\"Bitcoin\"=?, \"Ripple\"=?, \"Ethereum\"=?, \"Reais\"=?\n" +
+"	WHERE \"PessoaID\"=? ;";
+        PreparedStatement comando = conn.prepareStatement(sql);
+        
+
+    }
 }

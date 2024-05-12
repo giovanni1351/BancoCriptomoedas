@@ -16,7 +16,10 @@ public class Real extends Moedas implements Tarifacao{
         super(quantidade);
     }
     
-    public double tarifaCompra(){return 0;};
-    public double tarifaVenda(){ return 0;};
+    @Override
+    public double tarifaCompra(){return 1;};
+    @Override
+    public double tarifaVenda(){ return 1;};
+    @Override
     public double atualizaCotacao(){ return 0;};    
 }

@@ -11,7 +11,9 @@ package model;
 public class Moedas {
     private double cotacaoAtualParaReal;
     private double quantidade;
-
+    
+    
+    
     public double getCotacaoAtualParaReal() {
         return cotacaoAtualParaReal;
     }
@@ -31,7 +33,7 @@ public class Moedas {
     public Moedas(double quantidade) {
         this.quantidade = quantidade;
     }
-
+    public double atualizaCotacao(){return 1.666;};
     @Override
     public String toString() {
         return "Moedas{" + "cotacaoAtualParaReal=" + cotacaoAtualParaReal + ", quantidade=" + quantidade + '}';
