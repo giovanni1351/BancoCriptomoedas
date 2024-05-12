@@ -16,6 +16,14 @@ public class Carteira {
     private Ripple ripple;
     private Bitcoin bitcoin;
     ArrayList<Moedas> genericas = new ArrayList<Moedas>();
+
+    public ArrayList<Moedas> getGenericas() {
+        return genericas;
+    }
+
+    public void setGenericas(ArrayList<Moedas> genericas) {
+        this.genericas = genericas;
+    }
     
     public Moedas getMoeda(int index){
         index+=1;

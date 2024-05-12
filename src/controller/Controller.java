@@ -136,6 +136,13 @@ public class Controller {
         pessoaDAO = new PessoaDAO(connection);
     }
     public void verExtrato(){
+        
+        try{
+            extrato.clear();
+            carregaExtrato(userAtual.getId());
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(menu, "Erro de sql: "+e);
+        }
         System.out.println(extrato.size());
 
 
@@ -167,7 +174,6 @@ public class Controller {
             String moeda = resExtrato.getString("moeda");
             double saldo = resExtrato.getDouble("saldo");
             extrato.add(new Extrato(data,op,valor,taxa,saldo,moeda));
-//ublic Extrato(Date data, String operacao, double valor, double taxa, double saldo, String moeda) {
         }
         for(Extrato i: extrato){
             System.out.println(i.printar());
@@ -227,9 +233,10 @@ public class Controller {
                     carteiraAtual.getReal().setQuantidade(reaisCarteira);
                     System.out.println(carteiraAtual);
                     try{
-                    pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"vendeu",
-                            fracaoDeVenda,carteiraAtual.getMoeda(index).tarifaVenda(),
-                            reaisCarteira,menu.getComboBoxMoedas().getItemAt(index)));
+                        pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"vendeu",
+                        fracaoDeVenda,carteiraAtual.getMoeda(index).tarifaVenda(),
+                        reaisCarteira,menu.getComboBoxMoedas().getItemAt(index)));
+                        pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
                     }catch(SQLException e){
                         JOptionPane.showMessageDialog(menu, "Erro de Sql"+e);
 

@@ -20,7 +20,7 @@ import model.Pessoa;
  */
 public class PessoaDAO {
     private Connection conn;
-
+    private ArrayList<String> moedas = new ArrayList<>();
     public PessoaDAO(Connection conn) {
         this.conn = conn;
     }
@@ -92,13 +92,29 @@ public class PessoaDAO {
         comando.execute();
 
     }
-    public void atualizarCarteira(long id,Carteira user,ArrayList<String> moedas) throws SQLException{
+    public void atualizarCarteira(long id,Carteira user) throws SQLException{
         
-        String sql = "UPDATE public.\"Carteira\"\n" +
-"	SET \n"
-                + "\"Bitcoin\"=?, \"Ripple\"=?, \"Ethereum\"=?, \"Reais\"=?\n" +
-"	WHERE \"PessoaID\"=? ;";
+        String sql1 = "UPDATE public.\"Carteira\" SET ";
+        String sql2 = "\n";
+        sql2+="\"Bitcoin\"=?,\n";
+        sql2+="\"Ripple\"=?,\n";
+        sql2+="\"Ethereum\"=?,\n";
+        sql2+="\"Reais\"=?\n";
+        for(String a: moedas){
+            sql2 += String.format(",\"%s\"=?", a);
+        }
+        String condicao = String.format("WHERE \"PessoaID\" = %d ",id);
+        String sql = sql1+sql2+condicao;
         PreparedStatement comando = conn.prepareStatement(sql);
+        comando.setDouble(1,user.getBitcoin().getQuantidade());
+        comando.setDouble(2,user.getRipple().getQuantidade());
+        comando.setDouble(3,user.getEth().getQuantidade());
+        comando.setDouble(4,user.getReal().getQuantidade());
+        for(int x = 0 ;x < moedas.size();x++){
+            comando.setDouble(x+4, user.getArrayList().get(x).getQuantidade());
+        }
+        comando.execute();
+        
         
     }
     public void addExtrato(long id,Extrato extrato) throws SQLException{
