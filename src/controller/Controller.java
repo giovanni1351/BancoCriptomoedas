@@ -220,11 +220,20 @@ public class Controller {
                 int confirmou = JOptionPane.showConfirmDialog(menu, "Confimar-se gostaria realmente de vender");
                 if(confirmou ==0){
                     reaisCarteira += (fracaoDeVenda*carteiraAtual.getMoeda(index).
-                            getCotacaoAtualParaReal());
+                            getCotacaoAtualParaReal()*carteiraAtual.getMoeda(index)
+                                    .tarifaVenda());
                     fracaoMoeda-=fracaoDeVenda;
                     carteiraAtual.getMoeda(index).setQuantidade(fracaoMoeda);
                     carteiraAtual.getReal().setQuantidade(reaisCarteira);
                     System.out.println(carteiraAtual);
+                    try{
+                    pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"vendeu",
+                            fracaoDeVenda,carteiraAtual.getMoeda(index).tarifaVenda(),
+                            reaisCarteira,menu.getComboBoxMoedas().getItemAt(index)));
+                    }catch(SQLException e){
+                        JOptionPane.showMessageDialog(menu, "Erro de Sql"+e);
+
+                    }
                     JOptionPane.showMessageDialog(menu, "Venda concluida");
                     atualizaSaldoTela();
                 }
@@ -250,7 +259,7 @@ public class Controller {
         //Fração:
         //Preco unidade:
         Moedas moedaSelecionada = carteiraAtual.getMoeda(index);
-        lblfracaoAtual.setText(String.format("Fração:%.2f",moedaSelecionada.getQuantidade()));
+        lblfracaoAtual.setText(String.format("Fração:%.10f",moedaSelecionada.getQuantidade()));
         lblcotacaoMoeda.setText(String.format("Preco unidade:%.2f",moedaSelecionada.getCotacaoAtualParaReal()));
         double valor = moedaSelecionada.getQuantidade()*moedaSelecionada.getCotacaoAtualParaReal();
         lblsaldocripto.setText(String.format("Saldo Cripto:%.2f",valor));

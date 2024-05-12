@@ -104,10 +104,14 @@ public class PessoaDAO {
     public void addExtrato(long id,Extrato extrato) throws SQLException{
         String sql = "INSERT INTO public.\"Extrato\"(\n" +
 "	\"PessoaID\", \"Data\", operacao, valor, taxa, moeda, saldo)\n" +
-"	VALUES (?, ?, ?, ?, ?, ?, ?);";
+"	VALUES (?, CURRENT_DATE, ?, ?, ?, ?, ?);";
         PreparedStatement comando = conn.prepareStatement(sql);
         comando.setLong(1,id);
-        comando.setString(2,extrato.getData().toString());
-        comando.setString(3,extrato.getOperacao());
+        comando.setString(2,extrato.getOperacao());
+        comando.setDouble(3,extrato.getValor());
+        comando.setDouble(4,extrato.getTaxa());
+        comando.setString(5,extrato.getMoeda());
+        comando.setDouble(6,extrato.getSaldo());
+        comando.execute();
     }
 }
