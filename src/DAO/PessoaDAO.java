@@ -5,11 +5,13 @@
 package DAO;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Carteira;
+import model.Extrato;
 import model.Pessoa;
 
 /**
@@ -98,6 +100,14 @@ public class PessoaDAO {
 "	WHERE \"PessoaID\"=? ;";
         PreparedStatement comando = conn.prepareStatement(sql);
         
-
+    }
+    public void addExtrato(long id,Extrato extrato) throws SQLException{
+        String sql = "INSERT INTO public.\"Extrato\"(\n" +
+"	\"PessoaID\", \"Data\", operacao, valor, taxa, moeda, saldo)\n" +
+"	VALUES (?, ?, ?, ?, ?, ?, ?);";
+        PreparedStatement comando = conn.prepareStatement(sql);
+        comando.setLong(1,id);
+        comando.setString(2,extrato.getData().toString());
+        comando.setString(3,extrato.getOperacao());
     }
 }

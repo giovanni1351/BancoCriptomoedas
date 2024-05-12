@@ -38,6 +38,8 @@ public class Controller {
     Pessoa userTentativa;
     Connection connection;
     PessoaDAO pessoaDAO;
+    private double fracaoDeVenda =0;
+    private int indiceMoedaVenda = 0;
 
     
     
@@ -188,7 +190,8 @@ public class Controller {
     }
     public void calcularVenda(){
         String valor = menu.getTxtValorVenda().getText();
-        int index = menu.getComboBoxMoedas().getSelectedIndex();       
+        int index = menu.getComboBoxMoedas().getSelectedIndex();  
+        indiceMoedaVenda = index;
         System.out.println(index);
         
         String moeda = menu.getComboBoxMoedas().getItemAt(index);
@@ -196,15 +199,44 @@ public class Controller {
         double valorDouble =0;
         try{
             valorDouble = Double.parseDouble(valor);
+            fracaoDeVenda = valorDouble;
         }catch(NumberFormatException e){
             menu.getTxtValorVenda().setText("Digite apenas numeros");
         }
         Moedas moedaSelecionada = carteiraAtual.getMoeda(index);
-        moedaSelecionada.atualizaCotacao();
-        menu.getTxtDisplayValorVenda().setText("R$:"+valorDouble*
-                moedaSelecionada.getCotacaoAtualParaReal());
+        
+        double valorDeVenda =valorDouble*moedaSelecionada.getCotacaoAtualParaReal()
+                *moedaSelecionada.tarifaVenda();
+        menu.getTxtDisplayValorVenda().setText(String.format("R$:%.2f",valorDeVenda));
         
     }
+    
+    public void venderMoedas(){
+        int index = menu.getComboBoxMoedas().getSelectedIndex();  
+        if(index == indiceMoedaVenda && fracaoDeVenda !=0){
+            double reaisCarteira = carteiraAtual.getReal().getQuantidade();
+            double fracaoMoeda = carteiraAtual.getMoeda(index).getQuantidade();
+            if(fracaoMoeda>fracaoDeVenda){
+                int confirmou = JOptionPane.showConfirmDialog(menu, "Confimar-se gostaria realmente de vender");
+                if(confirmou ==0){
+                    reaisCarteira += (fracaoDeVenda*carteiraAtual.getMoeda(index).
+                            getCotacaoAtualParaReal());
+                    fracaoMoeda-=fracaoDeVenda;
+                    carteiraAtual.getMoeda(index).setQuantidade(fracaoMoeda);
+                    carteiraAtual.getReal().setQuantidade(reaisCarteira);
+                    System.out.println(carteiraAtual);
+                    JOptionPane.showMessageDialog(menu, "Venda concluida");
+                    atualizaSaldoTela();
+                }
+            }else{
+                JOptionPane.showMessageDialog(menu, "Fração de venda maior que a possuida");
+            }
+        }else{
+            calcularVenda();
+        }
+    }
+    
+    
     public void atualizaSaldoTela(){
         int index = menu.getComboBoxMoedas().getSelectedIndex();
         System.out.println(index);
@@ -213,15 +245,16 @@ public class Controller {
         var lblfracaoAtual = menu.getLblFracaoAtual();
         var lblcotacaoMoeda = menu.getLblPrecoUnidade();
         var lblsaldocripto = menu.getLblSaldoCripto();
-        lblsaldo.setText("Saldo atual:"+carteiraAtual.getReal().getQuantidade());
+        lblsaldo.setText(String.format("Saldo atual:%.2f",carteiraAtual.getReal().getQuantidade()));
         lblNomeMoeda.setText(menu.getComboBoxMoedas().getItemAt(index));
         //Fração:
         //Preco unidade:
         Moedas moedaSelecionada = carteiraAtual.getMoeda(index);
-        lblfracaoAtual.setText("Fração:"+moedaSelecionada.getQuantidade());
-        lblcotacaoMoeda.setText("Preco unidade:"+moedaSelecionada.atualizaCotacao());
-        double valor = moedaSelecionada.getQuantidade()*moedaSelecionada.atualizaCotacao();
-        lblsaldocripto.setText("Saldo Cripto:"+valor);
+        lblfracaoAtual.setText(String.format("Fração:%.2f",moedaSelecionada.getQuantidade()));
+        lblcotacaoMoeda.setText(String.format("Preco unidade:%.2f",moedaSelecionada.getCotacaoAtualParaReal()));
+        double valor = moedaSelecionada.getQuantidade()*moedaSelecionada.getCotacaoAtualParaReal();
+        lblsaldocripto.setText(String.format("Saldo Cripto:%.2f",valor));
 
     }
+    
 }

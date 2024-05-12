@@ -8,14 +8,19 @@ package model;
  *
  * @author unifgmorassi
  */
-public class Moedas {
+public class Moedas implements Tarifacao{
     private double cotacaoAtualParaReal;
     private double quantidade;
     
     
     
     public double getCotacaoAtualParaReal() {
+        if(cotacaoAtualParaReal == 0){
+            double porcento = Math.random();
+            cotacaoAtualParaReal = (100000*porcento);            
+        }
         return cotacaoAtualParaReal;
+        
     }
 
     public void setCotacaoAtualParaReal(double cotacaoAtualParaReal) {
@@ -37,6 +42,16 @@ public class Moedas {
     @Override
     public String toString() {
         return "Moedas{" + "cotacaoAtualParaReal=" + cotacaoAtualParaReal + ", quantidade=" + quantidade + '}';
+    }
+
+    @Override
+    public double tarifaCompra() {
+        return 1;
+    }
+
+    @Override
+    public double tarifaVenda() {
+        return 1;
     }
     
   
