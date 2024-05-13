@@ -42,6 +42,7 @@ public class Controller {
     private double fracaoDeCompra =0;
     private int indiceMoedaVenda = 0;
     private int indiceMoedaCompra = 0;
+    private int quantidadeDeMoedas = 3;
 
     
     
@@ -193,9 +194,6 @@ public class Controller {
         Carteira carteira = new Carteira(bitcoin,ripple,ethereum,real);
         return carteira;
     }
-    public void clicouEmComprar(){
-        
-    }
     public void calcularVenda(){
         String valor = menu.getTxtValorVenda().getText();
         int index = menu.getComboBoxMoedas().getSelectedIndex();  
@@ -242,12 +240,6 @@ public class Controller {
         menu.getLblDisplayValorCompra().setText(String.format("R$:%.2f",valorDeCompra));
         
     }
-    
-    
-    
-    
-    
-    
     public void venderMoedas(){
         int index = menu.getComboBoxMoedas().getSelectedIndex();  
         if(index == indiceMoedaVenda && fracaoDeVenda !=0){
@@ -317,8 +309,8 @@ public class Controller {
             }
         }
     }
-    
     public void atualizaSaldoTela(){
+        mostraInfos();
         int index = menu.getComboBoxMoedas().getSelectedIndex();
         System.out.println(index);
         var lblNomeMoeda = menu.getLblNomeMoedaOlhada();
@@ -337,5 +329,62 @@ public class Controller {
         lblsaldocripto.setText(String.format("Saldo Cripto:%.2f",valor));
 
     }
+    public void mostraInfos(){
+        var botao = menu.getToggleMostraInfos();
+        var nome = menu.getLblNomeInfos();
+        var cpf = menu.getLblCPFInfos();
+        var bitcoin = menu.getLblBitcoinInfos();
+        var ethereum = menu.getLblEthereumInfos();
+        var ripple = menu.getLblRippleInfos();
+        var reais = menu.getLblReaisInfos();
+        
+        nome.setText("Nome: "+userAtual.getNome());
+        if(botao.isSelected()){
+            cpf.setText("CPF: "+userAtual.getCPF());
+            bitcoin.setText("Saldo Bitcoin R$: "+carteiraAtual.getBitcoin().getCotacaoAtualParaReal()*carteiraAtual.getBitcoin().getQuantidade());
+            ethereum.setText("Saldo Ethereum R$: "+carteiraAtual.getEth().getCotacaoAtualParaReal()*carteiraAtual.getEth().getQuantidade());
+            ripple.setText("Saldo Ripple R$: "+carteiraAtual.getRipple().getCotacaoAtualParaReal()*carteiraAtual.getRipple().getQuantidade());
+            reais.setText("Saldo R$: "+carteiraAtual.getReal().getQuantidade());
+
+        }else{
+            cpf.setText("CPF: XXX.XXX.XXX-XX");
+            bitcoin.setText("Saldo Bitcoin R$: ?");
+            ethereum.setText("Saldo Ethereum R$: ?");
+            ripple.setText("Saldo Ripple R$: ?");
+            reais.setText("Saldo R$: ?");
+        }
+    }
+    public void atualizaCotacao(){
+        atualizaSaldoTela();
+        for(int x = 0 ; x <quantidadeDeMoedas;x++){
+            carteiraAtual.getMoeda(x).atualizaCotacao();
+        }
+    }
+    public void depositarReais(){
+        String valorDeposito = menu.getTxtValorDeposito().getText();
+        double valor = 0;
+        try{
+            valor = Double.parseDouble(valorDeposito);
+        }catch(NumberFormatException e){
+            menu.getTxtValorDeposito().setText("Digite apenas numeros");
+        }
+        if(valor>0){
+            double realAtual = carteiraAtual.getReal().getQuantidade();
+            realAtual +=valor;
+            carteiraAtual.getReal().setQuantidade(realAtual);
+            try{
+                pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(menu,"Erro de SQL: "+e);
+            }
+            atualizaCotacao();
+        }else{
+            JOptionPane.showMessageDialog(menu,"Digite um valor positivo safado");
+        }
+        
+    }
+    
+    
+    
     
 }

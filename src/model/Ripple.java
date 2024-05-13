@@ -22,9 +22,13 @@ public class Ripple extends Moedas implements Tarifacao {
     public double tarifaVenda(){ return 0.99;};
     @Override
     public double atualizaCotacao(){
-        double porcento = Math.random();
-        this.setCotacaoAtualParaReal(100000*porcento);
+        double zeroAum = Math.random();
+        boolean positivoOuNao = (Math.random()>0.5)? true:false;
+        double valor = zeroAum*5;
+        valor/=100;
+        double multiplicador = 1+(valor*((positivoOuNao)? -1:1));
+        double valorAnterior = this.getCotacaoAtualParaReal();
+        this.setCotacaoAtualParaReal(valorAnterior*multiplicador);
         return this.getCotacaoAtualParaReal();
-    
     };      
 }
