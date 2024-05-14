@@ -57,13 +57,6 @@ public class MenuADM extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         txtCPFDeletar = new java.awt.TextField();
         jButton1 = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        txtCPFConsultarSaldos = new java.awt.TextField();
-        btConsultarSaldos = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        txtAreaConsultarSaldos = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
@@ -97,6 +90,8 @@ public class MenuADM extends javax.swing.JFrame {
         txtCPFConsultarExtrato = new java.awt.TextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -254,60 +249,6 @@ public class MenuADM extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Deletar Usuarios", jPanel4);
-
-        jLabel16.setText("Consultar saldo de usuarios");
-
-        jLabel17.setText("CPF:");
-
-        btConsultarSaldos.setInheritsPopupMenu(true);
-        btConsultarSaldos.setLabel("Consultar");
-
-        txtAreaConsultarSaldos.setColumns(20);
-        txtAreaConsultarSaldos.setRows(5);
-        jScrollPane2.setViewportView(txtAreaConsultarSaldos);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(340, 340, 340)
-                        .addComponent(jLabel16))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(280, 280, 280)
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCPFConsultarSaldos, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(0, 315, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(185, 185, 185))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(btConsultarSaldos)
-                        .addGap(369, 369, 369))))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(jLabel16)
-                .addGap(29, 29, 29)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
-                    .addComponent(txtCPFConsultarSaldos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addComponent(btConsultarSaldos)
-                .addGap(48, 48, 48)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(208, Short.MAX_VALUE))
-        );
-
-        jTabbedPane1.addTab("Consultar Saldos", jPanel5);
 
         jLabel20.setBackground(new java.awt.Color(0, 242, 242));
         jLabel20.setForeground(new java.awt.Color(0, 242, 242));
@@ -533,7 +474,7 @@ public class MenuADM extends javax.swing.JFrame {
 
         jLabel18.setBackground(new java.awt.Color(0, 242, 242));
         jLabel18.setForeground(new java.awt.Color(0, 242, 242));
-        jLabel18.setText("                                       Consultar extratos de usuarios");
+        jLabel18.setText("                                       Consultar dados de usuarios");
         jLabel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jLabel19.setText("CPF:");
@@ -547,14 +488,27 @@ public class MenuADM extends javax.swing.JFrame {
         });
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jTextArea1.setRows(5);
+        jTextArea1.setText("\t     Extratos:");
         jTextArea1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jScrollPane4.setViewportView(jTextArea1);
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jTextArea2.setRows(5);
+        jTextArea2.setText("                              Saldo:");
+        jTextArea2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        jScrollPane5.setViewportView(jTextArea2);
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(200, 200, 200))
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
@@ -564,14 +518,13 @@ public class MenuADM extends javax.swing.JFrame {
                         .addComponent(txtCPFConsultarExtrato, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(394, 394, 394)
-                        .addComponent(btConsultarExtratos)))
-                .addContainerGap(343, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4))
-                .addGap(200, 200, 200))
+                        .addComponent(btConsultarExtratos))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -584,9 +537,11 @@ public class MenuADM extends javax.swing.JFrame {
                     .addComponent(txtCPFConsultarExtrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btConsultarExtratos)
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -612,7 +567,7 @@ public class MenuADM extends javax.swing.JFrame {
                 .addContainerGap(128, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Consultar Extratos", jPanel6);
+        jTabbedPane1.addTab("Consultar Dados", jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -636,33 +591,33 @@ public class MenuADM extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btAtualizarUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarUsersActionPerformed
+    private void btConsultarExtratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarExtratosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btAtualizarUsersActionPerformed
-
-    private void btDeletarCriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarCriptoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btDeletarCriptoActionPerformed
-
-    private void btAtualizarCriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarCriptoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btAtualizarCriptoActionPerformed
+    }//GEN-LAST:event_btConsultarExtratosActionPerformed
 
     private void btAtualizarAllCriptosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarAllCriptosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btAtualizarAllCriptosActionPerformed
 
-    private void btCadastrarInvestidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarInvestidorActionPerformed
+    private void btAtualizarCriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarCriptoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btCadastrarInvestidorActionPerformed
+    }//GEN-LAST:event_btAtualizarCriptoActionPerformed
 
-    private void btConsultarExtratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarExtratosActionPerformed
+    private void btDeletarCriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarCriptoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btConsultarExtratosActionPerformed
+    }//GEN-LAST:event_btDeletarCriptoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btCadastrarInvestidorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarInvestidorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btCadastrarInvestidorActionPerformed
+
+    private void btAtualizarUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarUsersActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btAtualizarUsersActionPerformed
 
     /**
      * @param args the command line arguments
@@ -706,7 +661,6 @@ public class MenuADM extends javax.swing.JFrame {
     private javax.swing.JButton btCadastrarCripto;
     private javax.swing.JButton btCadastrarInvestidor;
     private javax.swing.JButton btConsultarExtratos;
-    private javax.swing.JButton btConsultarSaldos;
     private javax.swing.JButton btDeletarCripto;
     private javax.swing.JButton btListarUsers;
     private javax.swing.JButton jButton1;
@@ -716,8 +670,6 @@ public class MenuADM extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -734,24 +686,22 @@ public class MenuADM extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
     private java.awt.TextField textField1;
     private java.awt.TextField textField3;
     private javax.swing.JTextArea txtAreaConsultarExtrato;
-    private javax.swing.JTextArea txtAreaConsultarSaldos;
     private javax.swing.JTextArea txtAreaUsuarios;
     private java.awt.TextField txtCPFConsultarExtrato;
-    private java.awt.TextField txtCPFConsultarSaldos;
     private java.awt.TextField txtCPFDeletar;
     private java.awt.TextField txtCPFInvestidor;
     private java.awt.TextField txtCotacaoCripto;
