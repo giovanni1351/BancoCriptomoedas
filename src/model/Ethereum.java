@@ -12,6 +12,8 @@ public class Ethereum extends Moedas implements Tarifacao {
 
     public Ethereum(double quantidade) {
         super(quantidade);
+        this.setNome("Ethereum");
+
     }
 
     @Override

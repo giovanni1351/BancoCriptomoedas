@@ -352,13 +352,19 @@ public class Controller {
             ethereum.setText("Saldo Ethereum R$: ?");
             ripple.setText("Saldo Ripple R$: ?");
             reais.setText("Saldo R$: ?");
-        }
+        }   
     }
     public void atualizaCotacao(){
         atualizaSaldoTela();
+        String texto = "";
         for(int x = 0 ; x <quantidadeDeMoedas;x++){
             carteiraAtual.getMoeda(x).atualizaCotacao();
+            String nome = carteiraAtual.getMoeda(x).getNome();
+            Double cotacao = carteiraAtual.getMoeda(x).getCotacaoAtualParaReal();
+            String atual = String.format("%s = %.2f \n",nome,cotacao);
+            texto+=atual;
         }
+        menu.getTxtMostrarCotacaoMoedas().setText(texto);
     }
     public void depositarReais(){
         String valorDeposito = menu.getTxtValorDeposito().getText();
@@ -374,14 +380,46 @@ public class Controller {
             carteiraAtual.getReal().setQuantidade(realAtual);
             try{
                 pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
+                pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"Depositou",valor,0,realAtual,"Reais"));
+                JOptionPane.showMessageDialog(menu, "Depositou "+valor+" com sucesso!");
             }catch(SQLException e){
                 JOptionPane.showMessageDialog(menu,"Erro de SQL: "+e);
             }
+            
             atualizaCotacao();
         }else{
             JOptionPane.showMessageDialog(menu,"Digite um valor positivo safado");
         }
         
+    }
+    
+    public void sacarReais(){
+        String valorTexto = menu.getTxtValorParaSacar().getText();
+        double valor = 0;
+        try{
+            valor = Double.parseDouble(valorTexto);
+        }catch(NumberFormatException e){
+            menu.getTxtValorParaSacar().setText("Digite apenas numeros");
+        }
+        double reaisAtual = carteiraAtual.getReal().getQuantidade();
+        
+        if(valor<=reaisAtual && valor>=0&& valor <=1e20){
+            reaisAtual-=valor;
+            carteiraAtual.getReal().setQuantidade(reaisAtual);
+            try{
+                pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
+                pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"Sacou",valor,0,reaisAtual,"Reais"));
+                JOptionPane.showMessageDialog(menu, "Sacou "+valor+" Com sucesso!");
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(menu, "Erro de sql: " + e);
+            }
+            atualizaCotacao();
+        }else if(valor > reaisAtual){
+            JOptionPane.showMessageDialog(menu,"Valor maior que o possuido!");
+        }else if(valor<0){
+            JOptionPane.showMessageDialog(menu, "Digite um valor positivo");
+        }
+                
     }
     
     

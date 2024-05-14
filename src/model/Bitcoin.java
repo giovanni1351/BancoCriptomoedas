@@ -9,9 +9,10 @@ package model;
  * @author unifgmorassi
  */
 public class Bitcoin extends Moedas implements Tarifacao{
-
+     
     public Bitcoin(double quantidade) {
         super(quantidade);
+        this.setNome("Bitcoin");
     }
         
 

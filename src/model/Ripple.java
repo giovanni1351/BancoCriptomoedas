@@ -12,6 +12,7 @@ public class Ripple extends Moedas implements Tarifacao {
 
     public Ripple(double quantidade) {
         super(quantidade);
+        this.setNome("Ripple");
     }
     
         

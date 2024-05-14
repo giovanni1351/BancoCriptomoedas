@@ -220,6 +220,14 @@ public class Menu extends javax.swing.JFrame {
     public void setLblReaisInfos(JLabel lblReaisInfos) {
         this.lblReaisInfos = lblReaisInfos;
     }
+
+    public JTextArea getTxtMostrarCotacaoMoedas() {
+        return txtMostrarCotacaoMoedas;
+    }
+
+    public void setTxtMostrarCotacaoMoedas(JTextArea txtMostrarCotacaoMoedas) {
+        this.txtMostrarCotacaoMoedas = txtMostrarCotacaoMoedas;
+    }
     
 
 
@@ -304,6 +312,8 @@ public class Menu extends javax.swing.JFrame {
         lblReaisInfos = new javax.swing.JLabel();
         jPanel24 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtMostrarCotacaoMoedas = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 255, 204));
@@ -688,6 +698,11 @@ public class Menu extends javax.swing.JFrame {
         jPanel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
 
         btSacar.setText("Confirma");
+        btSacar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSacarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1087,15 +1102,16 @@ public class Menu extends javax.swing.JFrame {
 
         lblNomeInfos.setText("Nome: ??");
 
-        lblBitcoinInfos.setText("Bitcoin:");
+        lblBitcoinInfos.setText("Saldo Bitcoin R$: ?");
 
-        lblCPFInfos.setText("CPF");
+        lblCPFInfos.setText("CPF: XXX.XXX.XXX-XX");
 
-        lblEthereumInfos.setText("Ethereum");
+        lblEthereumInfos.setText("Saldo Ethereum R$: ?");
 
-        lblRippleInfos.setText("Ripple");
+        lblRippleInfos.setText("Saldo Ripple R$: ?");
+        lblRippleInfos.setFocusable(false);
 
-        lblReaisInfos.setText("Saldo R$:");
+        lblReaisInfos.setText("Saldo R$: ?");
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -1146,19 +1162,34 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        txtMostrarCotacaoMoedas.setBackground(new java.awt.Color(204, 255, 255));
+        txtMostrarCotacaoMoedas.setColumns(20);
+        txtMostrarCotacaoMoedas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtMostrarCotacaoMoedas.setRows(5);
+        txtMostrarCotacaoMoedas.setText("\n");
+        txtMostrarCotacaoMoedas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        txtMostrarCotacaoMoedas.setFocusable(false);
+        jScrollPane1.setViewportView(txtMostrarCotacaoMoedas);
+
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
         jPanel24Layout.setHorizontalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(482, Short.MAX_VALUE))
+                .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel24Layout.createSequentialGroup()
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 476, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -1243,6 +1274,10 @@ public class Menu extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         c.depositarReais();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void btSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSacarActionPerformed
+        c.sacarReais();        // TODO add your handling code here:
+    }//GEN-LAST:event_btSacarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1329,6 +1364,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
@@ -1348,6 +1384,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel lblSaldoCripto;
     private javax.swing.JTable tabelaExtrato;
     private javax.swing.JToggleButton toggleMostraInfos;
+    private javax.swing.JTextArea txtMostrarCotacaoMoedas;
     private javax.swing.JTextField txtValorCompra;
     private javax.swing.JTextField txtValorDeposito;
     private javax.swing.JTextField txtValorParaSacar;

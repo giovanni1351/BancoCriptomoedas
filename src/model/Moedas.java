@@ -11,6 +11,15 @@ package model;
 public class Moedas implements Tarifacao{
     private double cotacaoAtualParaReal;
     private double quantidade;
+    private String nome;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
     
     
     

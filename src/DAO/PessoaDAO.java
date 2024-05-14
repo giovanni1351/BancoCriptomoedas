@@ -59,7 +59,7 @@ public class PessoaDAO {
     }
         
     public ResultSet consultarTabelaExtrato(long id) throws SQLException{
-        String sql = "select * from \"Extrato\" where \"PessoaID\" = ? --ORDER BY \"Data\" DESC ";
+        String sql = "select * from \"Extrato\" where \"PessoaID\" = ? ORDER BY \"numeroRegistro\" DESC ";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setLong(1, id);
         statement.execute();
