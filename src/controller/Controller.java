@@ -20,6 +20,7 @@ import java.sql.ResultSet;
  */
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -29,6 +30,9 @@ import model.Extrato;
 import model.Moedas;
 import view.MenuADM;
 public class Controller {
+    
+    
+    
     private final LoginCadastro loginCadastro;
     private MenuADM menuADM = new MenuADM();
     private final Menu menu = new Menu();
@@ -274,7 +278,6 @@ public class Controller {
             calcularVenda();
         }
     }
-    
     public void comprarMoedas(){
         int index = menu.getComboBoxMoedas().getSelectedIndex();  
         if(index == indiceMoedaCompra && fracaoDeCompra >0){
@@ -391,8 +394,7 @@ public class Controller {
             JOptionPane.showMessageDialog(menu,"Digite um valor positivo safado");
         }
         
-    }
-    
+    } 
     public void sacarReais(){
         String valorTexto = menu.getTxtValorParaSacar().getText();
         double valor = 0;
@@ -422,7 +424,94 @@ public class Controller {
                 
     }
     
+    public void cadastrarInvestidorADM(){
+        String cpf = menuADM.getTxtCadastroCPF().getText();
+        String senha =menuADM.getTxtCadastroSenha().getText();
+        String nome = menuADM.getTxtCadastroNome().getText();
+        long cpfLong =0 ,senhaLong =0 ;
+        try{
+           senhaLong = Long.parseLong(senha);
+        }catch(NumberFormatException e){
+           menuADM.getTxtCadastroSenha().setText("Digite apenas numeros");
+        }
+        try{
+           cpfLong = Long.parseLong(cpf);
+        }catch(NumberFormatException e){
+           menuADM.getTxtCadastroCPF().setText("Digite apenas numeros");
+        }
+        try{
+            pessoaDAO.cadastrar(new Investidor(nome,senhaLong,cpfLong));
+            JOptionPane.showMessageDialog(menuADM,"Usuario cadastrado");
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(menuADM,"Erro de sql: "+e);
+        }       
+    }
+    public void deletarUsuario(){
+        String cpf = menuADM.getTxtCPFDeletar().getText();
+        long cpfLong =0;
+        try{
+           cpfLong = Long.parseLong(cpf);
+        }catch(NumberFormatException e){
+           menuADM.getTxtCadastroCPF().setText("Digite apenas numeros");
+        }
+        try{
+        }catch(Exception e){
+            
+        }
+    }
+    public void mostrarTodosUsuarios(){
+        
+//                for(int x = 0;x < extrato.size();x++){
+//
+//            Extrato atual = extrato.get(x);
+//            tabela.setValueAt(atual.getData(), x, 0);
+//            tabela.setValueAt(atual.getOperacao(), x, 1);
+//            tabela.setValueAt(atual.getValor(), x, 2);
+//            tabela.setValueAt(atual.getTaxa(), x, 3);
+//            tabela.setValueAt(atual.getMoeda(), x, 4);
+//            tabela.setValueAt(atual.getSaldo(), x, 5);
+//
+//        }
+        ResultSet usuarios;
+        var tabela = menuADM.getTabelaUsuarios().getModel();
+        List<Pessoa> listaUsuarios = new ArrayList<>();
+        
+
+        try{
+            usuarios = pessoaDAO.consultarListaDeUsuarios();
+            while(usuarios.next()){
+                long idAtualLista = usuarios.getLong(1);
+                String nomeAtualLista = usuarios.getString(2);
+                long cpfAtualLista = usuarios.getLong(3);
+                long senhaAtualLista = usuarios.getLong(4);
+                boolean isADM= usuarios.getBoolean(5);
+                if(isADM){
+                    listaUsuarios.add(new Administrador( nomeAtualLista, 
+                            senhaAtualLista,  cpfAtualLista,  idAtualLista));
+                }else{
+                    listaUsuarios.add(new Investidor( nomeAtualLista, 
+                            senhaAtualLista,  cpfAtualLista,  idAtualLista));
+                }
+                
+            }
+            for(int x = 0 ;x < listaUsuarios.size();x++){
+                var atual = listaUsuarios.get(x);
+                tabela.setValueAt(atual.getId(),x,0);
+                tabela.setValueAt(atual.getNome(),x,1);
+                tabela.setValueAt(atual.getCPF(),x,2);
+                tabela.setValueAt(atual.getSenha(),x,3);
+
+            }
+            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(menuADM, "Erro:" + e);
+        }
+
+        
+    }
+    
     
     
     
 }
+

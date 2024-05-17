@@ -43,9 +43,7 @@ public class  Investidor extends Pessoa {
     
     }
 
-    @Override
-    public String toString() {
-        return "Investidor{" + "carteira=" + carteira + '}';
-    }
+    
+    
     
 }

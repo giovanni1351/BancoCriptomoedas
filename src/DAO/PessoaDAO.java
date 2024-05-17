@@ -19,8 +19,8 @@ import model.Pessoa;
  * @author unifgmorassi
  */
 public class PessoaDAO {
-    private Connection conn;
-    private ArrayList<String> moedas = new ArrayList<>();
+    private final Connection conn;
+    private final ArrayList<String> moedas = new ArrayList<>();
     public PessoaDAO(Connection conn) {
         this.conn = conn;
     }
@@ -118,9 +118,10 @@ public class PessoaDAO {
         
     }
     public void addExtrato(long id,Extrato extrato) throws SQLException{
-        String sql = "INSERT INTO public.\"Extrato\"(\n" +
-"	\"PessoaID\", \"Data\", operacao, valor, taxa, moeda, saldo)\n" +
-"	VALUES (?, CURRENT_DATE, ?, ?, ?, ?, ?);";
+        String sql = """
+                     INSERT INTO public."Extrato"(
+                     \t"PessoaID", "Data", operacao, valor, taxa, moeda, saldo)
+                     \tVALUES (?, CURRENT_DATE, ?, ?, ?, ?, ?);""";
         PreparedStatement comando = conn.prepareStatement(sql);
         comando.setLong(1,id);
         comando.setString(2,extrato.getOperacao());
@@ -129,5 +130,14 @@ public class PessoaDAO {
         comando.setString(5,extrato.getMoeda());
         comando.setDouble(6,extrato.getSaldo());
         comando.execute();
+    }
+    public ResultSet consultarListaDeUsuarios() throws SQLException{
+        String sql="""
+                   SELECT "PessoaID", "Nome", "CPF", "Senha", "IsADM"
+                   	FROM public."Pessoa";
+                   """;
+        PreparedStatement comando = conn.prepareStatement(sql);
+        comando.execute();
+        return comando.getResultSet();
     }
 }
