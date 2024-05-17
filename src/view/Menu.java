@@ -448,6 +448,7 @@ public class Menu extends javax.swing.JFrame {
         );
 
         tabelaExtrato.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        tabelaExtrato.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         tabelaExtrato.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
