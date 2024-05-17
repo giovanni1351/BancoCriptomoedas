@@ -102,13 +102,18 @@ public class Controller {
             String senha = loginCadastro.getPfSenhaCadastro().getText();
             long senhaLong = Long.parseLong(senha);
             long cpfLong = Long.parseLong(cpf);
-            Investidor novo = new Investidor(nome, senhaLong, cpfLong);
-            long idNovo = pessoaDAO.cadastrar((Pessoa)novo);
-            novo.setId(idNovo);
-            System.out.println(idNovo);
-            pessoaDAO.cadastrarCarteira(idNovo);
-            userAtual = novo;
-            //configuraMenu();
+            if(!pessoaDAO.procurarExistenciaPeloCPF(cpfLong)){
+                Investidor novo = new Investidor(nome, senhaLong, cpfLong);
+                long idNovo = pessoaDAO.cadastrar((Pessoa)novo);
+                novo.setId(idNovo);
+                System.out.println(idNovo);
+                pessoaDAO.cadastrarCarteira(idNovo);
+                userAtual = novo;
+                //configuraMenu();
+                JOptionPane.showMessageDialog(loginCadastro, "Conta cadastrada com sucesso");
+            }else{
+                JOptionPane.showMessageDialog(loginCadastro, "CPF ja cadastrado");
+            }
         }catch(NumberFormatException e){
             loginCadastro.getTxtCpfCadastro().setText("Digite apenas numeros");
             loginCadastro.getLblAvisoErroSenha1().setText("Digite apenas numeros");
@@ -439,9 +444,14 @@ public class Controller {
            menuADM.getTxtCadastroCPF().setText("Digite apenas numeros");
         }
         try{
-            long idNovo = pessoaDAO.cadastrar(new Investidor(nome,senhaLong,cpfLong));
-            pessoaDAO.cadastrarCarteira(idNovo);
-            JOptionPane.showMessageDialog(menuADM,"Usuario cadastrado");
+            if(!pessoaDAO.procurarExistenciaPeloCPF(cpfLong)){
+                long idNovo = pessoaDAO.cadastrar(new Investidor(nome,senhaLong,cpfLong));
+                pessoaDAO.cadastrarCarteira(idNovo);
+                JOptionPane.showMessageDialog(menuADM,"Usuario cadastrado");
+            }else{
+                JOptionPane.showMessageDialog(menuADM,"CPF ja existente");
+
+            }
         }catch(SQLException e){
             JOptionPane.showMessageDialog(menuADM,"Erro de sql: "+e);
         }       
@@ -462,13 +472,19 @@ public class Controller {
                 System.out.println("foi");
                 boolean ehADM = pessoa.getBoolean("isADM");
                 if(!ehADM){
-                    if(pessoaDAO.deletarUsuario(cpfLong)){
-                        System.out.println("deletou");
-                        JOptionPane.showMessageDialog(menuADM, "Conta deletada com sucesso");
+                    if(pessoaDAO.deletarUsuarioCarteira(cpfLong)){
+                        System.out.println("deletou carteira");
+                        if(pessoaDAO.deletarUsuario(cpfLong)){
+                            System.out.println("deletou");
+                            JOptionPane.showMessageDialog(menuADM, "Conta deletada com sucesso");
+                        }else{
+                            JOptionPane.showMessageDialog(menuADM, "Não deletou conta, mas deletou carteira");
+                        }
                     }else{
-                        JOptionPane.showMessageDialog(menuADM, "erro ao deletar a conta");
+                            JOptionPane.showMessageDialog(menuADM, "erro ao deletar a conta");
                     }
-                }else if (ehADM){
+                }
+                else if (ehADM){
                     JOptionPane.showMessageDialog(menuADM, "não é possivel deleterar uma conta de Administrador");
                 }
             }else{

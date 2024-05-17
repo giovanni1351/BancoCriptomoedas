@@ -154,6 +154,37 @@ public class PessoaDAO {
         ResultSet resultado = comando.getResultSet();
         return resultado;
     }
+    public boolean procurarExistenciaPeloCPF(long cpf) throws SQLException{
+        String sql ="""
+                       SELECT "PessoaID", "Nome", "CPF", "Senha", "IsADM"
+                        	FROM public."Pessoa"
+                        	WHERE "CPF" = ?; 
+                    
+                    """;
+        PreparedStatement comando = conn.prepareStatement(sql);
+        comando.setLong(1, cpf);
+        comando.execute();
+        ResultSet resultado = comando.getResultSet();
+        return resultado.next();
+    }
+    public long acharIDpeloCPF(long CPF) throws SQLException{
+        String sql = """
+                     SELECT "PessoaID"
+                     FROM public."Pessoa"
+                     WHERE "CPF" = ? ;
+                     """;
+        PreparedStatement comando = conn.prepareStatement(sql);
+        comando.setLong(1, CPF);
+        comando.execute();
+        ResultSet res = comando.getResultSet();
+        if(res.next()){
+
+            System.out.println("achou o id : " +  res.getLong("PessoaID"));
+            return res.getLong("PessoaID");
+        }else{
+            return 0;
+        }
+    }
     public boolean deletarUsuario(long cpf){
         String sql = """
                      DELETE FROM public."Pessoa"
@@ -168,4 +199,26 @@ public class PessoaDAO {
             return false;
         }
     }
+    public boolean deletarUsuarioCarteira(long cpf){
+        String sql = """
+                     DELETE FROM public."Carteira"
+                     	WHERE "PessoaID" = ?;
+                     """;
+        try{
+            PreparedStatement comando = conn.prepareStatement(sql);
+            long id = acharIDpeloCPF(cpf);
+            System.out.println(id);
+            if(id !=0){
+                comando.setLong(1, id);
+            
+            comando.execute();
+            return true;
+            }else{
+                return false;
+            }
+        }catch(SQLException e){
+            return false;
+        }
+    }
+    
 }
