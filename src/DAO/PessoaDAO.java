@@ -140,4 +140,32 @@ public class PessoaDAO {
         comando.execute();
         return comando.getResultSet();
     }
+    
+    public ResultSet procurarPeloCPF(long cpf) throws SQLException{
+        String sql ="""
+                       SELECT "PessoaID", "Nome", "CPF", "Senha", "IsADM"
+                        	FROM public."Pessoa"
+                        	WHERE "CPF" = ?; 
+                    
+                    """;
+        PreparedStatement comando = conn.prepareStatement(sql);
+        comando.setLong(1, cpf);
+        comando.execute();
+        ResultSet resultado = comando.getResultSet();
+        return resultado;
+    }
+    public boolean deletarUsuario(long cpf){
+        String sql = """
+                     DELETE FROM public."Pessoa"
+                     	WHERE "CPF" = ?;
+                     """;
+        try{
+            PreparedStatement comando = conn.prepareStatement(sql);
+            comando.setLong(1, cpf);
+            comando.execute();
+            return true;
+        }catch(SQLException e){
+            return false;
+        }
+    }
 }

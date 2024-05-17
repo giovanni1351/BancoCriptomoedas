@@ -8,6 +8,7 @@ import controller.Controller;
 import java.awt.TextField;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  *
@@ -49,13 +50,15 @@ public class MenuADM extends javax.swing.JFrame {
         this.txtCPFConsultarExtrato = txtCPFConsultarExtrato;
     }
 
-    public TextField getTxtCPFDeletar() {
+    public JTextField getTxtCPFDeletar() {
         return txtCPFDeletar;
     }
 
-    public void setTxtCPFDeletar(TextField txtCPFDeletar) {
+    public void setTxtCPFDeletar(JTextField txtCPFDeletar) {
         this.txtCPFDeletar = txtCPFDeletar;
     }
+
+
 
     public TextField getTxtCadastroCPF() {
         return txtCadastroCPF;
@@ -136,9 +139,9 @@ public class MenuADM extends javax.swing.JFrame {
         jPanel11 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        txtCPFDeletar = new java.awt.TextField();
         jLabel15 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        txtCPFDeletar = new javax.swing.JTextField();
         jPanel12 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -200,8 +203,6 @@ public class MenuADM extends javax.swing.JFrame {
         jLabel14.setText("                                       Deletar usuarios cadastrados");
         jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
-        txtCPFDeletar.setEditable(false);
-
         jLabel15.setText("CPF:");
 
         jButton1.setText("Deletar");
@@ -217,15 +218,13 @@ public class MenuADM extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(94, 94, 94)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(180, 180, 180)
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCPFDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtCPFDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(68, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -237,11 +236,11 @@ public class MenuADM extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addComponent(jLabel14)
-                .addGap(43, 43, 43)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(44, 44, 44)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(txtCPFDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
+                .addGap(43, 43, 43)
                 .addComponent(jButton1)
                 .addContainerGap(76, Short.MAX_VALUE))
         );
@@ -815,7 +814,7 @@ public class MenuADM extends javax.swing.JFrame {
     }//GEN-LAST:event_btDeletarCriptoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        c.deletarUsuario();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btListarUsersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btListarUsersActionPerformed
@@ -911,7 +910,7 @@ public class MenuADM extends javax.swing.JFrame {
     private java.awt.TextField textField3;
     private javax.swing.JTextArea txtAreaConsultarExtrato;
     private java.awt.TextField txtCPFConsultarExtrato;
-    private java.awt.TextField txtCPFDeletar;
+    private javax.swing.JTextField txtCPFDeletar;
     private java.awt.TextField txtCadastroCPF;
     private java.awt.TextField txtCadastroNome;
     private java.awt.TextField txtCadastroSenha;

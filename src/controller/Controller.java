@@ -455,23 +455,28 @@ public class Controller {
            menuADM.getTxtCadastroCPF().setText("Digite apenas numeros");
         }
         try{
-        }catch(Exception e){
-            
+            ResultSet pessoa = pessoaDAO.procurarPeloCPF(cpfLong);
+            System.out.println("asdasdasasd");
+            System.out.println(pessoa.rowInserted());
+            if(pessoa.next()){
+                System.out.println("foi");
+                boolean ehADM = pessoa.getBoolean("isADM");
+                if(pessoaDAO.deletarUsuario(cpfLong)&&!ehADM){
+                    System.out.println("deletou");
+                    JOptionPane.showMessageDialog(menuADM, "Conta deletada com sucesso");
+                }else{
+                    JOptionPane.showMessageDialog(menuADM, "erro ao deletar a conta");
+                }
+            }else{
+                JOptionPane.showMessageDialog(menuADM, "Conta não encontrada");
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(menuADM, "Erro de sql: "+e);
+            System.out.println("n pssou pelo procurarpelocpf");
         }
     }
     public void mostrarTodosUsuarios(){
         
-//                for(int x = 0;x < extrato.size();x++){
-//
-//            Extrato atual = extrato.get(x);
-//            tabela.setValueAt(atual.getData(), x, 0);
-//            tabela.setValueAt(atual.getOperacao(), x, 1);
-//            tabela.setValueAt(atual.getValor(), x, 2);
-//            tabela.setValueAt(atual.getTaxa(), x, 3);
-//            tabela.setValueAt(atual.getMoeda(), x, 4);
-//            tabela.setValueAt(atual.getSaldo(), x, 5);
-//
-//        }
         ResultSet usuarios;
         var tabela = menuADM.getTabelaUsuarios().getModel();
         List<Pessoa> listaUsuarios = new ArrayList<>();
