@@ -100,7 +100,6 @@ public class Controller {
             String nome = loginCadastro.getTxtNomeCadastro().getText();
             String cpf = loginCadastro.getTxtCpfCadastro().getText();
             String senha = loginCadastro.getPfSenhaCadastro().getText();
-            System.out.println(senha);
             long senhaLong = Long.parseLong(senha);
             long cpfLong = Long.parseLong(cpf);
             Investidor novo = new Investidor(nome, senhaLong, cpfLong);
@@ -440,7 +439,8 @@ public class Controller {
            menuADM.getTxtCadastroCPF().setText("Digite apenas numeros");
         }
         try{
-            pessoaDAO.cadastrar(new Investidor(nome,senhaLong,cpfLong));
+            long idNovo = pessoaDAO.cadastrar(new Investidor(nome,senhaLong,cpfLong));
+            pessoaDAO.cadastrarCarteira(idNovo);
             JOptionPane.showMessageDialog(menuADM,"Usuario cadastrado");
         }catch(SQLException e){
             JOptionPane.showMessageDialog(menuADM,"Erro de sql: "+e);
@@ -461,11 +461,15 @@ public class Controller {
             if(pessoa.next()){
                 System.out.println("foi");
                 boolean ehADM = pessoa.getBoolean("isADM");
-                if(pessoaDAO.deletarUsuario(cpfLong)&&!ehADM){
-                    System.out.println("deletou");
-                    JOptionPane.showMessageDialog(menuADM, "Conta deletada com sucesso");
-                }else{
-                    JOptionPane.showMessageDialog(menuADM, "erro ao deletar a conta");
+                if(!ehADM){
+                    if(pessoaDAO.deletarUsuario(cpfLong)){
+                        System.out.println("deletou");
+                        JOptionPane.showMessageDialog(menuADM, "Conta deletada com sucesso");
+                    }else{
+                        JOptionPane.showMessageDialog(menuADM, "erro ao deletar a conta");
+                    }
+                }else if (ehADM){
+                    JOptionPane.showMessageDialog(menuADM, "não é possivel deleterar uma conta de Administrador");
                 }
             }else{
                 JOptionPane.showMessageDialog(menuADM, "Conta não encontrada");
@@ -498,6 +502,13 @@ public class Controller {
                             senhaAtualLista,  cpfAtualLista,  idAtualLista));
                 }
                 
+            }
+            for(int x = 0 ;x < 50;x++){
+                tabela.setValueAt("",x,0);
+                tabela.setValueAt("",x,1);
+                tabela.setValueAt("",x,2);
+                tabela.setValueAt("",x,3);
+
             }
             for(int x = 0 ;x < listaUsuarios.size();x++){
                 var atual = listaUsuarios.get(x);
