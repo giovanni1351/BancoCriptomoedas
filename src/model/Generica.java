@@ -9,10 +9,14 @@ package model;
  * @author Givas
  */
 public class Generica extends Moedas implements Tarifacao{
-    private String nome;
     public Generica(double quantidade) {
         super(quantidade);
     }
+
+    public Generica(double quantidade, String nome) {
+        super(quantidade, nome);
+    }
+    
     
     @Override
     public double tarifaCompra(){return 1.0;};

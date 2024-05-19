@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import model.Administrador;
 import model.Carteira;
 import model.Extrato;
+import model.Generica;
 import model.Moedas;
 import view.MenuADM;
 public class Controller {
@@ -169,11 +170,6 @@ public class Controller {
             tabela.setValueAt(atual.getSaldo(), x, 5);
 
         }
-        //String textoExtrato ="" ;
-        //for(Extrato i : extrato){
-          //  textoExtrato+=(i.printar()+"\n");
-        //}
-        //menu.getTxtPrintInfos().setText(textoExtrato);
     }
     public void carregaExtrato(long idUser) throws SQLException{
         ResultSet resExtrato = pessoaDAO.consultarTabelaExtrato(idUser);
@@ -541,10 +537,79 @@ public class Controller {
 
         
     }
-    
-    
-    
-    
-    
+    public void admMostraInfomarcoesUsuariosADM(){
+        var tabelaCarteira = menuADM.getTabelaCarteiraConsulta().getModel();
+        var tabelaExtrato = menuADM.getTabelaExtrato().getModel();
+        String cpfString = menuADM.getTxtCPFConsultarExtrato().getText();
+        ArrayList<Extrato> extratoAtual = new ArrayList<>();
+        ArrayList<Moedas> carteiraAtual = new ArrayList<>();
+        
+
+        long cpf =0;
+        try{
+            cpf= Long.parseLong(cpfString);
+        }catch(NumberFormatException e ){
+            menuADM.getTxtCPFConsultarExtrato().setText("Digite apenas numeros");
+        }
+        try{
+            long idAchado = pessoaDAO.acharIDpeloCPF(cpf);
+            ResultSet resExtrato = pessoaDAO.consultarTabelaExtrato(idAchado);
+            System.out.println("pegou o resultset ");
+            while(resExtrato.next()){
+                var data = resExtrato.getDate(2);
+                String op = resExtrato.getString(3);
+                double valor = resExtrato.getDouble(4);
+                double taxa = resExtrato.getDouble(5);
+                String moeda = resExtrato.getString(6);
+                double saldo = resExtrato.getDouble(7);
+                extratoAtual.add(new Extrato(data,op,valor,taxa,saldo,moeda));
+                System.out.println("adicionou na array list do extrato");
+            }
+            for(int x = 0 ; x < 90;x++){
+                
+                tabelaExtrato.setValueAt("", x, 0);
+                tabelaExtrato.setValueAt("", x, 1);
+                tabelaExtrato.setValueAt("", x, 2);
+                tabelaExtrato.setValueAt("", x, 3);
+                tabelaExtrato.setValueAt("" , x, 4);
+                tabelaExtrato.setValueAt("", x, 5);
+                
+            }
+            for(int x = 0 ; x < extratoAtual.size();x++){
+                Extrato a = extratoAtual.get(x);
+                tabelaExtrato.setValueAt(a.getData(), x, 0);
+                tabelaExtrato.setValueAt(a.getOperacao(), x, 1);
+                tabelaExtrato.setValueAt(a.getValor(), x, 2);
+                tabelaExtrato.setValueAt(a.getTaxa(), x, 3);
+                tabelaExtrato.setValueAt(a.getMoeda(), x, 4);
+                tabelaExtrato.setValueAt(a.getSaldo(), x, 5);
+                
+            }
+            
+            ResultSet resCarteira = pessoaDAO.consultarTabelaCarteira(idAchado);
+            if(resCarteira.next()){
+                carteiraAtual.add(new Generica(resCarteira.getDouble(5),"Reais"));
+                carteiraAtual.add(new Generica(resCarteira.getDouble(4),"Ethreum"));
+                carteiraAtual.add(new Generica(resCarteira.getDouble(3),"Ripple"));
+                carteiraAtual.add(new Generica(resCarteira.getDouble(2),"BitCoin"));
+                
+            }
+            
+            for(int x = 0 ; x < 90;x++){
+                tabelaCarteira.setValueAt("", x, 0);
+                tabelaCarteira.setValueAt("", x, 1);
+            }
+            for(int x = 0 ; x < carteiraAtual.size();x++){
+                var atual = carteiraAtual.get(x);
+                tabelaCarteira.setValueAt(atual.getNome(), x, 0);
+                tabelaCarteira.setValueAt(atual.getQuantidade(), x, 1);
+            }
+            
+            
+            
+        }catch(SQLException e){
+            System.out.println("erro de sql" + e);
+        }
+    }
 }
 

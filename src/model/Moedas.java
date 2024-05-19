@@ -20,6 +20,11 @@ public class Moedas implements Tarifacao{
     public void setNome(String nome) {
         this.nome = nome;
     }
+
+    public Moedas(double quantidade, String nome) {
+        this.quantidade = quantidade;
+        this.nome = nome;
+    }
     
     
     
