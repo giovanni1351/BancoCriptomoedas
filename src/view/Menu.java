@@ -1265,7 +1265,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void toggleMostraInfosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleMostraInfosActionPerformed
-        c.mostraInfos();        // TODO add your handling code here:
+        c.verificaSenhaEMostraInfo();        // TODO add your handling code here:
     }//GEN-LAST:event_toggleMostraInfosActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed

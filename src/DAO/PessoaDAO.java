@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import model.Carteira;
 import model.Extrato;
 import model.Generica;
+import model.Moedas;
 import model.Pessoa;
 
 /**
@@ -96,23 +97,26 @@ public class PessoaDAO {
     public void atualizarCarteira(long id,Carteira user) throws SQLException{
         
         String sql1 = "UPDATE public.\"Carteira\" SET ";
-        String sql2 = "\n";
-        sql2+="\"Bitcoin\"=?,\n";
-        sql2+="\"Ripple\"=?,\n";
-        sql2+="\"Ethereum\"=?,\n";
-        sql2+="\"Reais\"=?\n";
-        for(String a: moedas){
-            sql2 += String.format(",\"%s\"=?", a);
+        String sql2 = """
+               "Bitcoin" = ?,
+               "Ripple" = ? ,
+               "Ethereum"=? ,
+               "Reais" = ? """;
+        for(Moedas a: user.getGenericas()){
+            sql2 += String.format(",\n\"%s\"=?", a.getNome());
         }
-        String condicao = String.format("WHERE \"PessoaID\" = %d ",id);
+        System.out.println(user.getGenericas());
+        String condicao = String.format("\n WHERE \"PessoaID\" = %d ",id);
         String sql = sql1+sql2+condicao;
+        System.out.println(sql);
         PreparedStatement comando = conn.prepareStatement(sql);
         comando.setDouble(1,user.getBitcoin().getQuantidade());
         comando.setDouble(2,user.getRipple().getQuantidade());
         comando.setDouble(3,user.getEth().getQuantidade());
         comando.setDouble(4,user.getReal().getQuantidade());
-        for(int x = 0 ;x < moedas.size();x++){
-            comando.setDouble(x+4, user.getArrayList().get(x).getQuantidade());
+        for(int x = 0 ;x < user.getGenericas().size();x++){
+            System.out.println("Quantidade: "+user.getGenericas().get(x).getQuantidade());
+            comando.setDouble(x+5, user.getGenericas().get(x).getQuantidade());
         }
         comando.execute();
         
@@ -256,6 +260,15 @@ public class PessoaDAO {
               """,nome);
         comando = conn.prepareStatement(sql);
         comando.execute();
+    }
+    
+    public ResultSet consultaMoedasGenericas() throws SQLException{
+        String sql = """
+                        SELECT * FROM moedas
+                     """;
+        PreparedStatement comando = conn.prepareStatement(sql);
+        comando.execute();
+        return comando.getResultSet();
     }
     
 }

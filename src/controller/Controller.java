@@ -196,6 +196,29 @@ public class Controller {
             real = resCarteira.getDouble("Reais");
         }
         Carteira carteira = new Carteira(bitcoin,ripple,ethereum,real);
+        ResultSet gen = pessoaDAO.consultaMoedasGenericas();
+        int contador = 0;
+        while(gen.next()){
+            //double taxaCompra, double taxaVenda, String nome
+            double taxaCompra = gen.getDouble(3);
+            double taxaVenda = gen.getDouble(2);
+            String nomeMoeda = gen.getString(1);
+            carteira.getGenericas().add(new Generica(taxaCompra,taxaVenda,nomeMoeda));
+            System.out.print(taxaCompra+ " ");
+            System.out.print(taxaVenda+ " ");
+            System.out.println(nomeMoeda+ " ");
+            menu.getComboBoxMoedas().addItem(nomeMoeda);
+            this.quantidadeDeMoedas++;
+
+            contador++;
+        }
+        for(int i = 1 ; i <= contador ; i++){
+            double atual  = resCarteira.getDouble(5+1);
+            carteira.getGenericas().get(i-1).setQuantidade(atual);
+        }
+        
+        
+        
         return carteira;
     }
     public void calcularVenda(){
@@ -332,7 +355,22 @@ public class Controller {
         lblsaldocripto.setText(String.format("Saldo Cripto:%.2f",valor));
 
     }
+    public void verificaSenhaEMostraInfo(){
+        String senha  = JOptionPane.showInputDialog(menu, "Digite sua senha");
+        long senhaLong =0;
+        try{
+            senhaLong= Long.parseLong(senha);
+        }
+        catch(NumberFormatException e){
+            
+            JOptionPane.showMessageDialog(menu, "Digite apenas numeros");
+        }
+        if(senhaLong == userAtual.getSenha()){
+            mostraInfos();
+        }
+    }
     public void mostraInfos(){
+
         var botao = menu.getToggleMostraInfos();
         var nome = menu.getLblNomeInfos();
         var cpf = menu.getLblCPFInfos();
@@ -340,7 +378,7 @@ public class Controller {
         var ethereum = menu.getLblEthereumInfos();
         var ripple = menu.getLblRippleInfos();
         var reais = menu.getLblReaisInfos();
-        
+
         nome.setText("Nome: "+userAtual.getNome());
         if(botao.isSelected()){
             cpf.setText("CPF: "+userAtual.getCPF());
@@ -356,6 +394,7 @@ public class Controller {
             ripple.setText("Saldo Ripple R$: ?");
             reais.setText("Saldo R$: ?");
         }   
+
     }
     public void atualizaCotacao(){
         atualizaSaldoTela();
@@ -645,6 +684,7 @@ public class Controller {
             JOptionPane.showMessageDialog(menuADM, "Erro: "+  e);
         }
     }
+    
     
     
 }
