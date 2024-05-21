@@ -78,19 +78,19 @@ public class MenuADM extends javax.swing.JFrame {
     }
 
     public TextField getTxtCotacaoCripto() {
-        return txtCotacaoCripto;
+        return txtTaxaCompra;
     }
 
     public void setTxtCotacaoCripto(TextField txtCotacaoCripto) {
-        this.txtCotacaoCripto = txtCotacaoCripto;
+        this.txtTaxaCompra = txtCotacaoCripto;
     }
 
     public TextField getTxtDeleteCripto() {
-        return txtDeleteCripto;
+        return txtTaxaVenda;
     }
 
     public void setTxtDeleteCripto(TextField txtDeleteCripto) {
-        this.txtDeleteCripto = txtDeleteCripto;
+        this.txtTaxaVenda = txtDeleteCripto;
     }
 
     public TextField getTxtNomeCripto() {
@@ -133,6 +133,30 @@ public class MenuADM extends javax.swing.JFrame {
         this.tabelaExtrato = tabelaExtrato;
     }
 
+    public TextField getTxtTaxaCompra() {
+        return txtTaxaCompra;
+    }
+
+    public void setTxtTaxaCompra(TextField txtTaxaCompra) {
+        this.txtTaxaCompra = txtTaxaCompra;
+    }
+
+    public TextField getTxtTaxaVenda() {
+        return txtTaxaVenda;
+    }
+
+    public void setTxtTaxaVenda(TextField txtTaxaVenda) {
+        this.txtTaxaVenda = txtTaxaVenda;
+    }
+
+    public TextField getTxtNomeDeletarMoeda() {
+        return txtNomeDeletarMoeda;
+    }
+
+    public void setTxtNomeDeletarMoeda(TextField txtNomeDeletarMoeda) {
+        this.txtNomeDeletarMoeda = txtNomeDeletarMoeda;
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -146,11 +170,11 @@ public class MenuADM extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        txtCotacaoCripto = new java.awt.TextField();
+        txtTaxaCompra = new java.awt.TextField();
         jLabel2 = new javax.swing.JLabel();
         txtNomeCripto = new java.awt.TextField();
         jLabel3 = new javax.swing.JLabel();
-        txtDeleteCripto = new java.awt.TextField();
+        txtTaxaVenda = new java.awt.TextField();
         jLabel12 = new javax.swing.JLabel();
         btCadastrarCripto = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
@@ -158,7 +182,7 @@ public class MenuADM extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btDeletarCripto = new javax.swing.JButton();
-        textField3 = new java.awt.TextField();
+        txtNomeDeletarMoeda = new java.awt.TextField();
         jPanel10 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txtNomeCripto2 = new java.awt.TextField();
@@ -213,6 +237,11 @@ public class MenuADM extends javax.swing.JFrame {
         btCadastrarCripto.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btCadastrarCripto.setText("Cadastrar");
         btCadastrarCripto.setBorder(javax.swing.BorderFactory.createMatteBorder(3, 3, 3, 3, new java.awt.Color(0, 0, 0)));
+        btCadastrarCripto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCadastrarCriptoActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -236,8 +265,8 @@ public class MenuADM extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtNomeCripto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtDeleteCripto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtCotacaoCripto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(txtTaxaVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtTaxaCompra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btCadastrarCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -255,11 +284,11 @@ public class MenuADM extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(txtDeleteCripto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTaxaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addComponent(txtCotacaoCripto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTaxaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btCadastrarCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -293,7 +322,7 @@ public class MenuADM extends javax.swing.JFrame {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textField3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtNomeDeletarMoeda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btDeletarCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -305,7 +334,7 @@ public class MenuADM extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNomeDeletarMoeda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addComponent(btDeletarCripto, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -979,7 +1008,7 @@ public class MenuADM extends javax.swing.JFrame {
     }//GEN-LAST:event_btAtualizarCriptoActionPerformed
 
     private void btDeletarCriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarCriptoActionPerformed
-        // TODO add your handling code here:
+        c.deletarMoedaADM();        // TODO add your handling code here:
     }//GEN-LAST:event_btDeletarCriptoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -993,6 +1022,10 @@ public class MenuADM extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         c.cadastrarInvestidorADM();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btCadastrarCriptoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarCriptoActionPerformed
+        c.adicionarMoedasADM();        // TODO add your handling code here:
+    }//GEN-LAST:event_btCadastrarCriptoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1073,15 +1106,15 @@ public class MenuADM extends javax.swing.JFrame {
     private javax.swing.JTable tabelaCarteiraConsulta;
     private javax.swing.JTable tabelaExtrato;
     private javax.swing.JTable tabelaUsuarios;
-    private java.awt.TextField textField3;
     private java.awt.TextField txtCPFConsultarExtrato;
     private javax.swing.JTextField txtCPFDeletar;
     private java.awt.TextField txtCadastroCPF;
     private java.awt.TextField txtCadastroNome;
     private java.awt.TextField txtCadastroSenha;
-    private java.awt.TextField txtCotacaoCripto;
-    private java.awt.TextField txtDeleteCripto;
     private java.awt.TextField txtNomeCripto;
     private java.awt.TextField txtNomeCripto2;
+    private java.awt.TextField txtNomeDeletarMoeda;
+    private java.awt.TextField txtTaxaCompra;
+    private java.awt.TextField txtTaxaVenda;
     // End of variables declaration//GEN-END:variables
 }

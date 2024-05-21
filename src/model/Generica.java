@@ -9,6 +9,7 @@ package model;
  * @author Givas
  */
 public class Generica extends Moedas implements Tarifacao{
+    private double taxaCompra,taxaVenda;
     public Generica(double quantidade) {
         super(quantidade);
     }
@@ -16,12 +17,26 @@ public class Generica extends Moedas implements Tarifacao{
     public Generica(double quantidade, String nome) {
         super(quantidade, nome);
     }
+
+    public Generica(double taxaCompra, double taxaVenda, String nome) {
+        super(nome);
+        this.taxaCompra = taxaCompra;
+        this.taxaVenda = taxaVenda;
+    }
+
+    public void setTaxaCompra(double taxaCompra) {
+        this.taxaCompra = taxaCompra;
+    }
+
+    public void setTaxaVenda(double taxaVenda) {
+        this.taxaVenda = taxaVenda;
+    }
     
     
     @Override
-    public double tarifaCompra(){return 1.0;};
+    public double tarifaCompra(){return taxaCompra;};
     @Override
-    public double tarifaVenda(){ return 1.0;};
+    public double tarifaVenda(){ return taxaVenda;};
     @Override
     public double atualizaCotacao(){
         double porcento = Math.random();

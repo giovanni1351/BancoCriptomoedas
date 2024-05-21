@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Carteira;
 import model.Extrato;
+import model.Generica;
 import model.Pessoa;
 
 /**
@@ -219,6 +220,42 @@ public class PessoaDAO {
         }catch(SQLException e){
             return false;
         }
+    }
+    public void addMoedaNaTabela(Generica moeda) throws SQLException{
+        String sql = """
+                     INSERT INTO public.moedas(
+                     	nome, taxavenda, taxacompra)
+                     	VALUES (?, ?, ?);
+                     """;
+        PreparedStatement comando = conn.prepareStatement(sql);
+        comando.setString(1, moeda.getNome());
+        comando.setDouble(2, moeda.tarifaVenda());
+        comando.setDouble(3, moeda.tarifaCompra());
+        comando.execute();
+        System.out.println("moeda adicionada na tabela moedas");
+        sql = String.format("""
+              ALTER TABLE IF EXISTS public."Carteira"
+                  ADD COLUMN %s real NOT NULL DEFAULT 0;
+              """,moeda.getNome());
+        comando = conn.prepareStatement(sql);
+        comando.execute();
+        System.out.println("moeda adicionada na carteira");
+    }
+    public void removeMoedaDaTabela(String nome) throws SQLException{
+        String sql = """
+                        DELETE FROM public.moedas
+                            WHERE "nome" = ?;
+                     """;
+        PreparedStatement comando = conn.prepareStatement(sql);
+        comando.setString(1, nome);
+        comando.execute();
+        sql = String.format("""
+
+              ALTER TABLE IF EXISTS public."Carteira"
+              DROP COLUMN %s
+              """,nome);
+        comando = conn.prepareStatement(sql);
+        comando.execute();
     }
     
 }

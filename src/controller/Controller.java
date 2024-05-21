@@ -611,5 +611,41 @@ public class Controller {
             System.out.println("erro de sql" + e);
         }
     }
+    public void adicionarMoedasADM(){
+        String nomeCrip = menuADM.getTxtNomeCripto().getText();
+        String taxaCompraStr = menuADM.getTxtTaxaCompra().getText();
+        String taxaVendaStr = menuADM.getTxtTaxaVenda().getText();
+        double taxaCompra =0 ,taxaVenda =0;
+        try{
+            taxaCompra = Double.parseDouble(taxaCompraStr);
+        }catch(NumberFormatException e){
+            menuADM.getTxtTaxaCompra().setText("Digite apenas numeros");
+        }
+        try{
+            taxaVenda = Double.parseDouble(taxaVendaStr);
+        }catch(NumberFormatException e){
+            menuADM.getTxtTaxaVenda().setText("Digite apenas numeros");
+        }
+        Generica nova = new Generica(taxaCompra,taxaVenda,nomeCrip );
+        try{
+            pessoaDAO.addMoedaNaTabela(nova);
+            JOptionPane.showMessageDialog(menuADM, "Moeda adicionada com sucesso");
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(menuADM, "Error: "+e);
+        }
+        
+    }
+    
+    public void deletarMoedaADM(){
+        String nomeMoeda = menuADM.getTxtNomeDeletarMoeda().getText();
+        try{
+            pessoaDAO.removeMoedaDaTabela(nomeMoeda);
+            JOptionPane.showMessageDialog(menuADM, "Moeda deletada com sucesso!");
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(menuADM, "Erro: "+  e);
+        }
+    }
+    
+    
 }
 

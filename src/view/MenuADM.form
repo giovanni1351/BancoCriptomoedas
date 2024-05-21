@@ -122,8 +122,8 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="txtNomeCripto" max="32767" attributes="0"/>
-                                      <Component id="txtDeleteCripto" max="32767" attributes="0"/>
-                                      <Component id="txtCotacaoCripto" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="txtTaxaVenda" max="32767" attributes="0"/>
+                                      <Component id="txtTaxaCompra" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -148,12 +148,12 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtDeleteCripto" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTaxaVenda" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtCotacaoCripto" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtTaxaCompra" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btCadastrarCripto" min="-2" pref="64" max="-2" attributes="0"/>
@@ -163,7 +163,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="java.awt.TextField" name="txtCotacaoCripto">
+                <Component class="java.awt.TextField" name="txtTaxaCompra">
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel2">
                   <Properties>
@@ -177,7 +177,7 @@
                     <Property name="text" type="java.lang.String" value="Taxa de venda:"/>
                   </Properties>
                 </Component>
-                <Component class="java.awt.TextField" name="txtDeleteCripto">
+                <Component class="java.awt.TextField" name="txtTaxaVenda">
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel12">
                   <Properties>
@@ -196,6 +196,9 @@
                       </Border>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCadastrarCriptoActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel8">
                   <Properties>
@@ -227,7 +230,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel5" min="-2" pref="115" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="textField3" max="32767" attributes="0"/>
+                                  <Component id="txtNomeDeletarMoeda" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -244,7 +247,7 @@
                           <Component id="jLabel4" min="-2" pref="26" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="textField3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtNomeDeletarMoeda" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="75" max="32767" attributes="0"/>
@@ -283,7 +286,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDeletarCriptoActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="java.awt.TextField" name="textField3">
+                <Component class="java.awt.TextField" name="txtNomeDeletarMoeda">
                 </Component>
               </SubComponents>
             </Container>
