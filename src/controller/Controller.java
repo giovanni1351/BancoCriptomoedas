@@ -190,6 +190,8 @@ public class Controller {
     public Carteira carregaCarteira(long idUser) throws SQLException{
         ResultSet resCarteira = pessoaDAO.consultarTabelaCarteira(idUser);
         double bitcoin =0 ,ripple =0 ,ethereum =0,real =0;
+
+
         if(resCarteira.next()){
             bitcoin = resCarteira.getDouble("Bitcoin");
             ripple = resCarteira.getDouble("Ripple");
@@ -204,7 +206,10 @@ public class Controller {
             double taxaCompra = gen.getDouble(3);
             double taxaVenda = gen.getDouble(2);
             String nomeMoeda = gen.getString(1);
-            carteira.getGenericas().add(new Generica(taxaCompra,taxaVenda,nomeMoeda));
+            double quantidadeDaMoeda = resCarteira.getDouble(nomeMoeda);
+            Generica generic = new Generica(taxaCompra,taxaVenda,nomeMoeda);
+            generic.setQuantidade(quantidadeDaMoeda);
+            carteira.getGenericas().add(generic);
             System.out.print(taxaCompra+ " ");
             System.out.print(taxaVenda+ " ");
             System.out.println(nomeMoeda+ " ");
@@ -213,13 +218,10 @@ public class Controller {
 
             contador++;
         }
-        for(int i = 1 ; i <= contador ; i++){
-            double atual  = resCarteira.getDouble(5+1);
-            carteira.getGenericas().get(i-1).setQuantidade(atual);
-        }
-        
-        
-        
+//        for(int i = 0 ; i < contador ; i++){
+//            double atual  = resCarteira.getDouble(6+i);
+//            carteira.getGenericas().get(i).setQuantidade(atual);
+//        }
         return carteira;
     }
     public void calcularVenda(){
@@ -621,7 +623,12 @@ public class Controller {
                 carteiraAtual.add(new Generica(resCarteira.getDouble(4),"Ethreum"));
                 carteiraAtual.add(new Generica(resCarteira.getDouble(3),"Ripple"));
                 carteiraAtual.add(new Generica(resCarteira.getDouble(2),"BitCoin"));
-                
+                ResultSet resMoedas = pessoaDAO.consultaMoedasGenericas();
+                while(resMoedas.next()){
+                    String nomeGenerica = resMoedas.getString(1);
+                    double valor = resCarteira.getDouble(nomeGenerica);
+                    carteiraAtual.add(new Generica(valor ,nomeGenerica));
+                }
             }
             
             for(int x = 0 ; x < 90;x++){
@@ -664,7 +671,6 @@ public class Controller {
         }
         
     }
-    
     public void deletarMoedaADM(){
         String nomeMoeda = menuADM.getTxtNomeDeletarMoeda().getText();
         try{
@@ -674,7 +680,6 @@ public class Controller {
             JOptionPane.showMessageDialog(menuADM, "Erro: "+  e);
         }
     }
-
     
     public void informacoesUsuario(){
         var tabelaCarteira = menu.getTabelaCarteiraConsulta().getModel();

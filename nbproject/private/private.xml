@@ -3,11 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Giovanni/Documents/GitHub/BancoCriptomoedas/src/view/Menu.java</file>
             <file>file:/C:/Users/Giovanni/Documents/GitHub/BancoCriptomoedas/src/DAO/PessoaDAO.java</file>
             <file>file:/C:/Users/Giovanni/Documents/GitHub/BancoCriptomoedas/src/model/Moedas.java</file>
+            <file>file:/C:/Users/Giovanni/Documents/GitHub/BancoCriptomoedas/src/model/Bitcoin.java</file>
             <file>file:/C:/Users/Giovanni/Documents/GitHub/BancoCriptomoedas/src/view/MenuADM.java</file>
+            <file>file:/C:/Users/Giovanni/Documents/GitHub/BancoCriptomoedas/src/model/Carteira.java</file>
             <file>file:/C:/Users/Giovanni/Documents/GitHub/BancoCriptomoedas/src/model/Generica.java</file>
             <file>file:/C:/Users/Giovanni/Documents/GitHub/BancoCriptomoedas/src/controller/Controller.java</file>
+            <file>file:/C:/Users/Giovanni/Documents/GitHub/BancoCriptomoedas/src/model/Extrato.java</file>
+            <file>file:/C:/Users/Giovanni/Documents/GitHub/BancoCriptomoedas/src/view/LoginCadastro.java</file>
         </group>
     </open-files>
 </project-private>
