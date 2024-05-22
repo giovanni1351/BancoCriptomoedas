@@ -148,27 +148,28 @@ public class Controller {
         pessoaDAO = new PessoaDAO(connection);
     }
     public void verExtrato(){
-        
-        try{
-            extrato.clear();
-            carregaExtrato(userAtual.getId());
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(menu, "Erro de sql: "+e);
-        }
-        System.out.println(extrato.size());
+        if(pedirSenha()){
+            try{
+                extrato.clear();
+                carregaExtrato(userAtual.getId());
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(menu, "Erro de sql: "+e);
+            }
+            System.out.println(extrato.size());
 
 
-        var tabela= menu.getTabelaExtrato().getModel();
-        for(int x = 0;x < extrato.size();x++){
+            var tabela= menu.getTabelaExtrato().getModel();
+            for(int x = 0;x < extrato.size();x++){
 
-            Extrato atual = extrato.get(x);
-            tabela.setValueAt(atual.getData(), x, 0);
-            tabela.setValueAt(atual.getOperacao(), x, 1);
-            tabela.setValueAt(atual.getValor(), x, 2);
-            tabela.setValueAt(atual.getTaxa(), x, 3);
-            tabela.setValueAt(atual.getMoeda(), x, 4);
-            tabela.setValueAt(atual.getSaldo(), x, 5);
+                Extrato atual = extrato.get(x);
+                tabela.setValueAt(atual.getData(), x, 0);
+                tabela.setValueAt(atual.getOperacao(), x, 1);
+                tabela.setValueAt(atual.getValor(), x, 2);
+                tabela.setValueAt(atual.getTaxa(), x, 3);
+                tabela.setValueAt(atual.getMoeda(), x, 4);
+                tabela.setValueAt(atual.getSaldo(), x, 5);
 
+            }
         }
     }
     public void carregaExtrato(long idUser) throws SQLException{
@@ -268,75 +269,79 @@ public class Controller {
         
     }
     public void venderMoedas(){
-        int index = menu.getComboBoxMoedas().getSelectedIndex();  
-        if(index == indiceMoedaVenda && fracaoDeVenda !=0){
-            double reaisCarteira = carteiraAtual.getReal().getQuantidade();
-            double fracaoMoeda = carteiraAtual.getMoeda(index).getQuantidade();
-            if(fracaoMoeda>fracaoDeVenda){
-                int confirmou = JOptionPane.showConfirmDialog(menu, "Confimar-se gostaria realmente de vender");
-                if(confirmou ==0){
-                    reaisCarteira += (fracaoDeVenda*carteiraAtual.getMoeda(index).
-                            getCotacaoAtualParaReal()*carteiraAtual.getMoeda(index)
-                                    .tarifaVenda());
-                    fracaoMoeda-=fracaoDeVenda;
-                    carteiraAtual.getMoeda(index).setQuantidade(fracaoMoeda);
-                    carteiraAtual.getReal().setQuantidade(reaisCarteira);
-                    System.out.println(carteiraAtual);
-                    try{
-                        pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"vendeu",
-                        fracaoDeVenda,carteiraAtual.getMoeda(index).tarifaVenda(),
-                        reaisCarteira,menu.getComboBoxMoedas().getItemAt(index)));
-                        pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
-                    }catch(SQLException e){
-                        JOptionPane.showMessageDialog(menu, "Erro de Sql"+e);
+        if(pedirSenha()){
+            int index = menu.getComboBoxMoedas().getSelectedIndex();  
+            if(index == indiceMoedaVenda && fracaoDeVenda !=0){
+                double reaisCarteira = carteiraAtual.getReal().getQuantidade();
+                double fracaoMoeda = carteiraAtual.getMoeda(index).getQuantidade();
+                if(fracaoMoeda>fracaoDeVenda){
+                    int confirmou = JOptionPane.showConfirmDialog(menu, "Confimar-se gostaria realmente de vender");
+                    if(confirmou ==0){
+                        reaisCarteira += (fracaoDeVenda*carteiraAtual.getMoeda(index).
+                                getCotacaoAtualParaReal()*carteiraAtual.getMoeda(index)
+                                        .tarifaVenda());
+                        fracaoMoeda-=fracaoDeVenda;
+                        carteiraAtual.getMoeda(index).setQuantidade(fracaoMoeda);
+                        carteiraAtual.getReal().setQuantidade(reaisCarteira);
+                        System.out.println(carteiraAtual);
+                        try{
+                            pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"vendeu",
+                            fracaoDeVenda,carteiraAtual.getMoeda(index).tarifaVenda(),
+                            reaisCarteira,menu.getComboBoxMoedas().getItemAt(index)));
+                            pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
+                        }catch(SQLException e){
+                            JOptionPane.showMessageDialog(menu, "Erro de Sql"+e);
 
+                        }
+                        JOptionPane.showMessageDialog(menu, "Venda concluida");
+                        atualizaSaldoTela();
                     }
-                    JOptionPane.showMessageDialog(menu, "Venda concluida");
-                    atualizaSaldoTela();
+                }else{
+                    JOptionPane.showMessageDialog(menu, "Fração de venda maior que a possuida");
                 }
             }else{
-                JOptionPane.showMessageDialog(menu, "Fração de venda maior que a possuida");
+                calcularVenda();
             }
-        }else{
-            calcularVenda();
         }
     }
     public void comprarMoedas(){
-        int index = menu.getComboBoxMoedas().getSelectedIndex();  
-        if(index == indiceMoedaCompra && fracaoDeCompra >0){
-            Moedas moedaAtual= carteiraAtual.getMoeda(index);
-            double valorEmReais = fracaoDeCompra * moedaAtual.getCotacaoAtualParaReal();
-            valorEmReais*=moedaAtual.tarifaCompra();
-            System.out.println("Valor da compra: "+valorEmReais);
-            double reaisAtual = carteiraAtual.getReal().getQuantidade();
-            double fracaoMoedaAtual = carteiraAtual.getMoeda(index).getQuantidade();
-            
-            if(valorEmReais< reaisAtual){
-                int confirmou = JOptionPane.showConfirmDialog(menu, "Gostaria mesmo de comprar?");
-                if(confirmou ==0){
-                    carteiraAtual.getReal().setQuantidade(reaisAtual-valorEmReais);
-                    carteiraAtual.getMoeda(index).setQuantidade(fracaoMoedaAtual+fracaoDeCompra);
-                    try{
-                        pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,
-                                "Comprou",fracaoDeCompra,moedaAtual.tarifaCompra(),
-                                reaisAtual,menu.getComboBoxMoedas().getItemAt(index)
-                        ));
-                        pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
-                    }catch(SQLException e){
-                        JOptionPane.showMessageDialog(menu, "Erro de Sql"+e);
+        if(pedirSenha()){
+            int index = menu.getComboBoxMoedas().getSelectedIndex();  
+            if(index == indiceMoedaCompra && fracaoDeCompra >0){
+                Moedas moedaAtual= carteiraAtual.getMoeda(index);
+                double valorEmReais = fracaoDeCompra * moedaAtual.getCotacaoAtualParaReal();
+                valorEmReais*=moedaAtual.tarifaCompra();
+                System.out.println("Valor da compra: "+valorEmReais);
+                double reaisAtual = carteiraAtual.getReal().getQuantidade();
+                double fracaoMoedaAtual = carteiraAtual.getMoeda(index).getQuantidade();
+
+                if(valorEmReais< reaisAtual){
+                    int confirmou = JOptionPane.showConfirmDialog(menu, "Gostaria mesmo de comprar?");
+                    if(confirmou ==0){
+                        carteiraAtual.getReal().setQuantidade(reaisAtual-valorEmReais);
+                        carteiraAtual.getMoeda(index).setQuantidade(fracaoMoedaAtual+fracaoDeCompra);
+                        try{
+                            pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,
+                                    "Comprou",fracaoDeCompra,moedaAtual.tarifaCompra(),
+                                    reaisAtual,menu.getComboBoxMoedas().getItemAt(index)
+                            ));
+                            pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
+                        }catch(SQLException e){
+                            JOptionPane.showMessageDialog(menu, "Erro de Sql"+e);
+
+                        }
+                        JOptionPane.showMessageDialog(menu, "Compra concluida");
+                        atualizaSaldoTela();
 
                     }
-                    JOptionPane.showMessageDialog(menu, "Compra concluida");
-                    atualizaSaldoTela();
-
+                }else{
+                    JOptionPane.showMessageDialog(menu, "Saldo insuficiente!");
                 }
-            }else{
-                JOptionPane.showMessageDialog(menu, "Saldo insuficiente!");
             }
         }
     }
     public void atualizaSaldoTela(){
-        mostraInfos();
+        informacoesUsuario();
         int index = menu.getComboBoxMoedas().getSelectedIndex();
         System.out.println(index);
         var lblNomeMoeda = menu.getLblNomeMoedaOlhada();
@@ -353,49 +358,30 @@ public class Controller {
         lblcotacaoMoeda.setText(String.format("Preco unidade:%.2f",moedaSelecionada.getCotacaoAtualParaReal()));
         double valor = moedaSelecionada.getQuantidade()*moedaSelecionada.getCotacaoAtualParaReal();
         lblsaldocripto.setText(String.format("Saldo Cripto:%.2f",valor));
+        
 
     }
     public void verificaSenhaEMostraInfo(){
-        String senha  = JOptionPane.showInputDialog(menu, "Digite sua senha");
-        long senhaLong =0;
-        try{
-            senhaLong= Long.parseLong(senha);
-        }
-        catch(NumberFormatException e){
-            
-            JOptionPane.showMessageDialog(menu, "Digite apenas numeros");
-        }
-        if(senhaLong == userAtual.getSenha()){
-            mostraInfos();
-        }
-    }
-    public void mostraInfos(){
+        var botao = menu.getToggleMostraInfos().isSelected();
+        if(botao){
+            String senha  = JOptionPane.showInputDialog(menu, "Digite sua senha");
+            long senhaLong =0;
+            try{
+                senhaLong= Long.parseLong(senha);
+            }
+            catch(NumberFormatException e){
 
-        var botao = menu.getToggleMostraInfos();
-        var nome = menu.getLblNomeInfos();
-        var cpf = menu.getLblCPFInfos();
-        var bitcoin = menu.getLblBitcoinInfos();
-        var ethereum = menu.getLblEthereumInfos();
-        var ripple = menu.getLblRippleInfos();
-        var reais = menu.getLblReaisInfos();
-
-        nome.setText("Nome: "+userAtual.getNome());
-        if(botao.isSelected()){
-            cpf.setText("CPF: "+userAtual.getCPF());
-            bitcoin.setText("Saldo Bitcoin R$: "+carteiraAtual.getBitcoin().getCotacaoAtualParaReal()*carteiraAtual.getBitcoin().getQuantidade());
-            ethereum.setText("Saldo Ethereum R$: "+carteiraAtual.getEth().getCotacaoAtualParaReal()*carteiraAtual.getEth().getQuantidade());
-            ripple.setText("Saldo Ripple R$: "+carteiraAtual.getRipple().getCotacaoAtualParaReal()*carteiraAtual.getRipple().getQuantidade());
-            reais.setText("Saldo R$: "+carteiraAtual.getReal().getQuantidade());
-
+                JOptionPane.showMessageDialog(menu, "Digite apenas numeros");
+            }
+            if(senhaLong == userAtual.getSenha()){
+                informacoesUsuario();
+            }
         }else{
-            cpf.setText("CPF: XXX.XXX.XXX-XX");
-            bitcoin.setText("Saldo Bitcoin R$: ?");
-            ethereum.setText("Saldo Ethereum R$: ?");
-            ripple.setText("Saldo Ripple R$: ?");
-            reais.setText("Saldo R$: ?");
-        }   
+            informacoesUsuario();
 
+        }
     }
+    
     public void atualizaCotacao(){
         atualizaSaldoTela();
         String texto = "";
@@ -409,56 +395,60 @@ public class Controller {
         menu.getTxtMostrarCotacaoMoedas().setText(texto);
     }
     public void depositarReais(){
-        String valorDeposito = menu.getTxtValorDeposito().getText();
-        double valor = 0;
-        try{
-            valor = Double.parseDouble(valorDeposito);
-        }catch(NumberFormatException e){
-            menu.getTxtValorDeposito().setText("Digite apenas numeros");
-        }
-        if(valor>0){
-            double realAtual = carteiraAtual.getReal().getQuantidade();
-            realAtual +=valor;
-            carteiraAtual.getReal().setQuantidade(realAtual);
+        if(pedirSenha()){
+            String valorDeposito = menu.getTxtValorDeposito().getText();
+            double valor = 0;
             try{
-                pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
-                pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"Depositou",valor,0,realAtual,"Reais"));
-                JOptionPane.showMessageDialog(menu, "Depositou "+valor+" com sucesso!");
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(menu,"Erro de SQL: "+e);
+                valor = Double.parseDouble(valorDeposito);
+            }catch(NumberFormatException e){
+                menu.getTxtValorDeposito().setText("Digite apenas numeros");
             }
-            
-            atualizaCotacao();
-        }else{
-            JOptionPane.showMessageDialog(menu,"Digite um valor positivo safado");
+            if(valor>0){
+                double realAtual = carteiraAtual.getReal().getQuantidade();
+                realAtual +=valor;
+                carteiraAtual.getReal().setQuantidade(realAtual);
+                try{
+                    pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
+                    pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"Depositou",valor,0,realAtual,"Reais"));
+                    JOptionPane.showMessageDialog(menu, "Depositou "+valor+" com sucesso!");
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(menu,"Erro de SQL: "+e);
+                }
+
+                atualizaCotacao();
+            }else{
+                JOptionPane.showMessageDialog(menu,"Digite um valor positivo safado");
+            }
         }
         
     } 
     public void sacarReais(){
-        String valorTexto = menu.getTxtValorParaSacar().getText();
-        double valor = 0;
-        try{
-            valor = Double.parseDouble(valorTexto);
-        }catch(NumberFormatException e){
-            menu.getTxtValorParaSacar().setText("Digite apenas numeros");
-        }
-        double reaisAtual = carteiraAtual.getReal().getQuantidade();
-        
-        if(valor<=reaisAtual && valor>=0&& valor <=1e20){
-            reaisAtual-=valor;
-            carteiraAtual.getReal().setQuantidade(reaisAtual);
+        if(pedirSenha()){
+            String valorTexto = menu.getTxtValorParaSacar().getText();
+            double valor = 0;
             try{
-                pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
-                pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"Sacou",valor,0,reaisAtual,"Reais"));
-                JOptionPane.showMessageDialog(menu, "Sacou "+valor+" Com sucesso!");
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(menu, "Erro de sql: " + e);
+                valor = Double.parseDouble(valorTexto);
+            }catch(NumberFormatException e){
+                menu.getTxtValorParaSacar().setText("Digite apenas numeros");
             }
-            atualizaCotacao();
-        }else if(valor > reaisAtual){
-            JOptionPane.showMessageDialog(menu,"Valor maior que o possuido!");
-        }else if(valor<0){
-            JOptionPane.showMessageDialog(menu, "Digite um valor positivo");
+            double reaisAtual = carteiraAtual.getReal().getQuantidade();
+
+            if(valor<=reaisAtual && valor>=0&& valor <=1e20){
+                reaisAtual-=valor;
+                carteiraAtual.getReal().setQuantidade(reaisAtual);
+                try{
+                    pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
+                    pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"Sacou",valor,0,reaisAtual,"Reais"));
+                    JOptionPane.showMessageDialog(menu, "Sacou "+valor+" Com sucesso!");
+                }catch(SQLException e){
+                    JOptionPane.showMessageDialog(menu, "Erro de sql: " + e);
+                }
+                atualizaCotacao();
+            }else if(valor > reaisAtual){
+                JOptionPane.showMessageDialog(menu,"Valor maior que o possuido!");
+            }else if(valor<0){
+                JOptionPane.showMessageDialog(menu, "Digite um valor positivo");
+            }
         }
                 
     }
@@ -684,8 +674,46 @@ public class Controller {
             JOptionPane.showMessageDialog(menuADM, "Erro: "+  e);
         }
     }
+
     
+    public void informacoesUsuario(){
+        var tabelaCarteira = menu.getTabelaCarteiraConsulta().getModel();
+        var botao = menu.getToggleMostraInfos().isSelected();
+
+        var valorReal = menu.getLblValorReais();
+        valorReal.setText(String.format("Reais : %.2f", carteiraAtual.getReal().getQuantidade()));
+        for(int x = 0 ; x < 90;x++){
+            tabelaCarteira.setValueAt("", x, 0);
+            tabelaCarteira.setValueAt("", x, 1);
+            tabelaCarteira.setValueAt("", x, 2);
+        }
+        if(botao){
+            for(int x = 0 ; x <quantidadeDeMoedas;x++){
+                var atual = carteiraAtual.getMoeda(x);
+                tabelaCarteira.setValueAt(atual.getNome(), x, 0);
+                tabelaCarteira.setValueAt(atual.getQuantidade(), x, 1);
+                tabelaCarteira.setValueAt(atual.getCotacaoAtualParaReal()*atual.getQuantidade(), x, 2);
+
+
+            }
+        }
+    }
     
-    
+    public boolean pedirSenha(){
+        String senhaPedida = JOptionPane.showInputDialog("Digite sua senha");
+        long senha =0;
+        try{
+            senha = Long.parseLong(senhaPedida);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(menu, "Digite apenas numeros");
+        }
+        if(senha == userAtual.getSenha()){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(menu, "Senha incorreta");
+
+            return false;
+        }
+    }
 }
 

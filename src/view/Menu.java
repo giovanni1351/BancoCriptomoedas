@@ -149,14 +149,6 @@ public class Menu extends javax.swing.JFrame {
         this.toggleMostraInfos = toggleMostraInfos;
     }
 
-    public JLabel getLblBitcoinInfos() {
-        return lblBitcoinInfos;
-    }
-
-    public void setLblBitcoinInfos(JLabel lblBitcoinInfos) {
-        this.lblBitcoinInfos = lblBitcoinInfos;
-    }
-
     public JLabel getLblDisplayValorVenda() {
         return lblDisplayValorVenda;
     }
@@ -165,29 +157,6 @@ public class Menu extends javax.swing.JFrame {
         this.lblDisplayValorVenda = lblDisplayValorVenda;
     }
 
-    public JLabel getLblEthereumInfos() {
-        return lblEthereumInfos;
-    }
-
-    public void setLblEthereumInfos(JLabel lblEthereumInfos) {
-        this.lblEthereumInfos = lblEthereumInfos;
-    }
-
-    public JLabel getLblNomeInfos() {
-        return lblNomeInfos;
-    }
-
-    public void setLblNomeInfos(JLabel lblNomeInfos) {
-        this.lblNomeInfos = lblNomeInfos;
-    }
-
-    public JLabel getLblRippleInfos() {
-        return lblRippleInfos;
-    }
-
-    public void setLblRippleInfos(JLabel lblRippleInfos) {
-        this.lblRippleInfos = lblRippleInfos;
-    }
 
     public JTextField getTxtValorDeposito() {
         return txtValorDeposito;
@@ -205,21 +174,6 @@ public class Menu extends javax.swing.JFrame {
         this.txtValorParaSacar = txtValorParaSacar;
     }
 
-    public JLabel getLblCPFInfos() {
-        return lblCPFInfos;
-    }
-
-    public void setLblCPFInfos(JLabel lblCPFInfos) {
-        this.lblCPFInfos = lblCPFInfos;
-    }
-
-    public JLabel getLblReaisInfos() {
-        return lblReaisInfos;
-    }
-
-    public void setLblReaisInfos(JLabel lblReaisInfos) {
-        this.lblReaisInfos = lblReaisInfos;
-    }
 
     public JTextArea getTxtMostrarCotacaoMoedas() {
         return txtMostrarCotacaoMoedas;
@@ -228,8 +182,24 @@ public class Menu extends javax.swing.JFrame {
     public void setTxtMostrarCotacaoMoedas(JTextArea txtMostrarCotacaoMoedas) {
         this.txtMostrarCotacaoMoedas = txtMostrarCotacaoMoedas;
     }
-    
 
+    public JTable getTabelaCarteiraConsulta() {
+        return tabelaCarteiraConsulta;
+    }
+
+    public void setTabelaCarteiraConsulta(JTable tabelaCarteiraConsulta) {
+        this.tabelaCarteiraConsulta = tabelaCarteiraConsulta;
+    }
+
+    public JLabel getLblValorReais() {
+        return lblValorReais;
+    }
+
+    public void setLblValorReais(JLabel lblValorReais) {
+        this.lblValorReais = lblValorReais;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -304,12 +274,9 @@ public class Menu extends javax.swing.JFrame {
         jPanel22 = new javax.swing.JPanel();
         jPanel23 = new javax.swing.JPanel();
         toggleMostraInfos = new javax.swing.JToggleButton();
-        lblNomeInfos = new javax.swing.JLabel();
-        lblBitcoinInfos = new javax.swing.JLabel();
-        lblCPFInfos = new javax.swing.JLabel();
-        lblEthereumInfos = new javax.swing.JLabel();
-        lblRippleInfos = new javax.swing.JLabel();
-        lblReaisInfos = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tabelaCarteiraConsulta = new javax.swing.JTable();
+        lblValorReais = new javax.swing.JLabel();
         jPanel24 = new javax.swing.JPanel();
         jButton8 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -1101,55 +1068,138 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        lblNomeInfos.setText("Nome: ??");
+        tabelaCarteiraConsulta.setBackground(new java.awt.Color(204, 255, 255));
+        tabelaCarteiraConsulta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        tabelaCarteiraConsulta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "MOEDA", "QUANTIDADE", "COTACAO"
+            }
+        ));
+        jScrollPane3.setViewportView(tabelaCarteiraConsulta);
 
-        lblBitcoinInfos.setText("Saldo Bitcoin R$: ?");
-
-        lblCPFInfos.setText("CPF: XXX.XXX.XXX-XX");
-
-        lblEthereumInfos.setText("Saldo Ethereum R$: ?");
-
-        lblRippleInfos.setText("Saldo Ripple R$: ?");
-        lblRippleInfos.setFocusable(false);
-
-        lblReaisInfos.setText("Saldo R$: ?");
+        lblValorReais.setText("Reais = ?");
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
         jPanel23Layout.setHorizontalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel23Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel23Layout.createSequentialGroup()
-                        .addGap(0, 366, Short.MAX_VALUE)
-                        .addComponent(toggleMostraInfos))
-                    .addComponent(lblNomeInfos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblBitcoinInfos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblCPFInfos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblEthereumInfos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblRippleInfos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lblReaisInfos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(lblValorReais, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(toggleMostraInfos)
                 .addContainerGap())
+            .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel23Layout.createSequentialGroup()
+                    .addGap(16, 16, 16)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+                    .addGap(17, 17, 17)))
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel23Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblNomeInfos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCPFInfos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblBitcoinInfos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblEthereumInfos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblRippleInfos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblReaisInfos, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(toggleMostraInfos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblValorReais)
+                    .addComponent(toggleMostraInfos))
                 .addContainerGap())
+            .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel23Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(46, Short.MAX_VALUE)))
         );
 
         jPanel24.setBackground(new java.awt.Color(204, 255, 255));
@@ -1189,7 +1239,7 @@ public class Menu extends javax.swing.JFrame {
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1211,7 +1261,7 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel22Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, 276, Short.MAX_VALUE)
+                    .addComponent(jPanel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -1367,22 +1417,19 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JLabel lblBitcoinInfos;
-    private javax.swing.JLabel lblCPFInfos;
     private javax.swing.JLabel lblDisplayValorCompra;
     private javax.swing.JLabel lblDisplayValorVenda;
-    private javax.swing.JLabel lblEthereumInfos;
     private javax.swing.JLabel lblFracaoAtual;
     private javax.swing.JLabel lblName;
-    private javax.swing.JLabel lblNomeInfos;
     private javax.swing.JLabel lblNomeMoedaOlhada;
     private javax.swing.JLabel lblPrecoUnidade;
-    private javax.swing.JLabel lblReaisInfos;
-    private javax.swing.JLabel lblRippleInfos;
     private javax.swing.JLabel lblSaldoAtual;
     private javax.swing.JLabel lblSaldoCripto;
+    private javax.swing.JLabel lblValorReais;
+    private javax.swing.JTable tabelaCarteiraConsulta;
     private javax.swing.JTable tabelaExtrato;
     private javax.swing.JToggleButton toggleMostraInfos;
     private javax.swing.JTextArea txtMostrarCotacaoMoedas;
