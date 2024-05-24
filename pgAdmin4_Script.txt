@@ -1,0 +1,85 @@
+-- Database: bancocripto
+
+-- DROP DATABASE IF EXISTS bancocripto;
+
+CREATE DATABASE bancocripto
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Portuguese_Brazil.1252'
+    LC_CTYPE = 'Portuguese_Brazil.1252'
+    LOCALE_PROVIDER = 'libc'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+-- Table: public.Carteira
+
+-- DROP TABLE IF EXISTS public."Carteira";
+
+CREATE TABLE IF NOT EXISTS public."Carteira"
+(
+    "PessoaID" bigint NOT NULL,
+    "Bitcoin" real NOT NULL DEFAULT 0,
+    "Ripple" real NOT NULL DEFAULT 0,
+    "Ethereum" real NOT NULL DEFAULT 0,
+    "Reais" real NOT NULL DEFAULT 0
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Carteira"
+    OWNER to postgres;
+-- Table: public.Extrato
+
+-- DROP TABLE IF EXISTS public."Extrato";
+
+CREATE TABLE IF NOT EXISTS public."Extrato"
+(
+    "PessoaID" bigint NOT NULL,
+    "Data" date,
+    operacao character varying COLLATE pg_catalog."default",
+    valor real,
+    taxa real,
+    moeda character varying COLLATE pg_catalog."default",
+    saldo real,
+    "numeroRegistro" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 )
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Extrato"
+    OWNER to postgres;
+-- Table: public.Pessoa
+
+-- DROP TABLE IF EXISTS public."Pessoa";
+
+CREATE TABLE IF NOT EXISTS public."Pessoa"
+(
+    "PessoaID" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
+    "Nome" character varying COLLATE pg_catalog."default" NOT NULL,
+    "CPF" bigint NOT NULL,
+    "Senha" bigint NOT NULL,
+    "IsADM" boolean NOT NULL DEFAULT false,
+    CONSTRAINT "Pessoa_pkey" PRIMARY KEY ("CPF", "PessoaID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Pessoa"
+    OWNER to postgres;
+-- Table: public.moedas
+
+-- DROP TABLE IF EXISTS public.moedas;
+
+CREATE TABLE IF NOT EXISTS public.moedas
+(
+    nome character varying(100) COLLATE pg_catalog."default",
+    taxavenda real,
+    taxacompra real
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.moedas
+    OWNER to postgres; 
