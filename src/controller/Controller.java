@@ -48,11 +48,25 @@ public class Controller {
     private int indiceMoedaVenda = 0;
     private int indiceMoedaCompra = 0;
     private int quantidadeDeMoedas = 3;
-
+   
     
+    public Controller(LoginCadastro loginCadastro) throws SQLException {
+        //contrutor da classe, onde recebe como parametro uma pagina de login
+        //essa classe e chamada na main
+        
+        this.loginCadastro = loginCadastro;// atribuindo a variavel do controler com o parametro recebido
+        Conexao conexao = new Conexao();//criando o objeto para a criacao da conexao com o banco de dados
+        connection = conexao.getConnection(); // usando o metodo getConnection da classe Conexao
+        pessoaDAO = new PessoaDAO(connection);//pessoaDAO sendo instanciada com a conexao criada e estabelecida 
+        //pelo objeto conexao
+    }
+    
+    //Funcao para logar e carregar todas as informacoes necessarias para o funcionamento
+    //do codigo.
     
     public void logarAbrirMenu(){
-
+        //Ele pega o cpf e senha e converte para double e faz o tratamento de excecao
+        //usando get e set 
         String cpf = loginCadastro.getTxtCpfLogin().getText();
         String senha = loginCadastro.getPfSenhaLogin().getText();
         long senhaLong=0,cpfLong=0;
@@ -67,8 +81,11 @@ public class Controller {
                 loginCadastro.getLblAvisoErroSenha().setText("Digite apenas numeros");
             }
             
+            //aqui instanciamos um objeto do tipo pessoa para armazenar as informacoes
             
             userTentativa = new Pessoa(cpfLong,senhaLong);
+            //essa funcao recebe um objeto pessoa para verificar se existe no banco de dados
+            //caso exista ele vai criar o userAtual com o usuario encontrado e suas informacoes
             ResultSet res = pessoaDAO.consultar(userTentativa);
             if(res.next()){
                 JOptionPane.showMessageDialog(loginCadastro, "Login feito com sucesso ");
@@ -97,6 +114,9 @@ public class Controller {
        
     }
     public void cadastrarInvestidor(){
+        //nesta funcao ele vai pegar as informacoes das textFieds e converter para o tipo de 
+        //dados corretos para o funcionamento correto dos objetos
+        //ele vai usar a funcao do objeto pessoaDAO apra adicionar no banco de dados
         try{
             String nome = loginCadastro.getTxtNomeCadastro().getText();
             String cpf = loginCadastro.getTxtCpfCadastro().getText();
@@ -105,6 +125,10 @@ public class Controller {
             long cpfLong = Long.parseLong(cpf);
             if(!pessoaDAO.procurarExistenciaPeloCPF(cpfLong)){
                 Investidor novo = new Investidor(nome, senhaLong, cpfLong);
+                //essa funcao usa como parametro um objeto Pessoa, com isso ele retorna
+                //o id correspondente dessa pessoa, para ser encontrado no banco de dados 
+                // com mais faacilidade
+                //E com o id conseguimos usar as outras funcoes.
                 long idNovo = pessoaDAO.cadastrar((Pessoa)novo);
                 novo.setId(idNovo);
                 System.out.println(idNovo);
@@ -124,31 +148,36 @@ public class Controller {
     }
     
     public void contruirMenu(){
+        //nesta funcao ele vai pegar o nome do usuario do objeto e colocar na label
+        //do menu para mostrar o nome
         String nome = userAtual.getNome();
         menu.getLblName().setText("Seja bem vindo " + nome);
                
     }
     private void configuraMenu(){
+        //nesta funcao ele vai pegar o menu e setar o controller dele sendo o este objeto
         menu.setC(this);
+        //metodo construir do objeto menu da classe Menu, onde tem o objetivo de fazer a 
+        //configuracao
         menu.construir();
+        //deixa o menu visivel
         menu.setVisible(true);
+        //deixa a pagina de login ou cadastro invisivel
         loginCadastro.setVisible(false);
     }
     private void configuraMenuADM(){
+        //ele vai setar  o controller do objeto menuADM como sendo esse controller
         menuADM.setVisible(true);
         menuADM.setC(this);
         loginCadastro.setVisible(false);
-
+        //e vai trocar a tela
         
     }
-    public Controller(LoginCadastro loginCadastro) throws SQLException {
-        this.loginCadastro = loginCadastro;
-        Conexao conexao = new Conexao();
-        connection = conexao.getConnection();
-        pessoaDAO = new PessoaDAO(connection);
-    }
+
     public void verExtrato(){
+        //se a funcao pedir senha retornar verdadeira ele entra no if e executa o codigo
         if(pedirSenha()){
+            //ele vai carregar o extrato no atributo arraylist de extrato do controller
             try{
                 extrato.clear();
                 carregaExtrato(userAtual.getId());
@@ -157,10 +186,11 @@ public class Controller {
             }
             System.out.println(extrato.size());
 
-
+            //ele vai pegar a tabela do extato e vai atualizar o atributo model
             var tabela= menu.getTabelaExtrato().getModel();
+            //este for vai ir de linha em linha colocando as informacoes armazenadas na arraylist extrato
             for(int x = 0;x < extrato.size();x++){
-
+                //
                 Extrato atual = extrato.get(x);
                 tabela.setValueAt(atual.getData(), x, 0);
                 tabela.setValueAt(atual.getOperacao(), x, 1);
@@ -173,7 +203,10 @@ public class Controller {
         }
     }
     public void carregaExtrato(long idUser) throws SQLException{
+        // funcao que vai carregar o extrato do banco de dados para a arraylist
+        //pega o result set
         ResultSet resExtrato = pessoaDAO.consultarTabelaExtrato(idUser);
+        //le o result set e da add no extrato
         while(resExtrato.next()){
             String op = resExtrato.getString("operacao");
             Date data = resExtrato.getDate("Data");
@@ -183,26 +216,35 @@ public class Controller {
             double saldo = resExtrato.getDouble("saldo");
             extrato.add(new Extrato(data,op,valor,taxa,saldo,moeda));
         }
+        //printa a arraylist para debugar
         for(Extrato i: extrato){
             System.out.println(i.printar());
         }
     }
     public Carteira carregaCarteira(long idUser) throws SQLException{
+        //funcao apra carregar a carteira do usuario quando for logar
+        //ele vai pegar o resultset
         ResultSet resCarteira = pessoaDAO.consultarTabelaCarteira(idUser);
         double bitcoin =0 ,ripple =0 ,ethereum =0,real =0;
 
-
+        //caso senha encontrado ele vai ler os valores da carteira 
+        //neste if ele vai pegar as moedas que sao as padroes
         if(resCarteira.next()){
             bitcoin = resCarteira.getDouble("Bitcoin");
             ripple = resCarteira.getDouble("Ripple");
             ethereum = resCarteira.getDouble("Ethereum");
             real = resCarteira.getDouble("Reais");
         }
+        //ele vai criar um objeto carteira e instanciar com os valores ja adquiridos 
         Carteira carteira = new Carteira(bitcoin,ripple,ethereum,real);
+        //agora ele vai ler todas a moedas aque foram criadas pelo adm usando a aplicacao
+        
         ResultSet gen = pessoaDAO.consultaMoedasGenericas();
+        //contador para saber quantas moedas foram lidas
         int contador = 0;
+        //ele vai fazer um looping while para pegar todos os resultados do result set
         while(gen.next()){
-            //double taxaCompra, double taxaVenda, String nome
+            //daqui pra baixo ele so vai ler o resultset dando gget nos valores da linha atual
             double taxaCompra = gen.getDouble(3);
             double taxaVenda = gen.getDouble(2);
             String nomeMoeda = gen.getString(1);
@@ -215,47 +257,59 @@ public class Controller {
             System.out.println(nomeMoeda+ " ");
             menu.getComboBoxMoedas().addItem(nomeMoeda);
             this.quantidadeDeMoedas++;
-
+            //a moeda vai ser adicionada na combobox e na arraylist de moedas genericas criada na carteira
             contador++;
         }
-//        for(int i = 0 ; i < contador ; i++){
-//            double atual  = resCarteira.getDouble(6+i);
-//            carteira.getGenericas().get(i).setQuantidade(atual);
-//        }
+        
         return carteira;
     }
     public void calcularVenda(){
-        String valor = menu.getTxtValorVenda().getText();
-        int index = menu.getComboBoxMoedas().getSelectedIndex();  
-        indiceMoedaVenda = index;
-        System.out.println(index);
+        //nesta funcao ele vai calcular o valor que ele vai receber 
+        //ele vai ler os valores da caixa de texto e fazer a conversao
+        //fazendo o tratamento de excessoes 
         
+        String valor = menu.getTxtValorVenda().getText();
+        //ele vai pegar o indice da moeda que foi selecionada
+        //para sabermos qual moeda vai ser calculada
+        int index = menu.getComboBoxMoedas().getSelectedIndex();  
+        //variavel global para sabermos em outros metodos a moeda selecionada
+        indiceMoedaVenda = index;
+        //print para debug
+        System.out.println(index);
+        //pegando a moeda a partir do indice usando o metodo getItemAt
         String moeda = menu.getComboBoxMoedas().getItemAt(index);
+        //print para debug
         System.out.println(moeda);
+        //valor iniciado
         double valorDouble =0;
         try{
+            
             valorDouble = Double.parseDouble(valor);
             fracaoDeVenda = valorDouble;
         }catch(NumberFormatException e){
             menu.getTxtValorVenda().setText("Digite apenas numeros");
         }
+        //pegando a moeda selecionada da carteira usando o metodo getmoeda que recebe como parametro o indice
         Moedas moedaSelecionada = carteiraAtual.getMoeda(index);
-        
+        //calculo para saber o valor de venda
         double valorDeVenda =valorDouble*moedaSelecionada.getCotacaoAtualParaReal()
                 *moedaSelecionada.tarifaVenda();
+        //comando para mostrar na tela o valor em rais para comprar a quantidade desejadaa de moeda
         menu.getTxtDisplayValorVenda().setText(String.format("R$:%.2f",valorDeVenda));
         
     }
     public void calculaCompra(){
+        //ele vai ler os valores da tela
+        //e converter fazendo seu tratamento de excessao
         String valor = menu.getTxtValorCompra().getText();
         int index = menu.getComboBoxMoedas().getSelectedIndex();  
         indiceMoedaCompra = index;
         System.out.println(index);
         
-        
+        //pegando o nome a partir do indice selecionado da combobox
         String moeda = menu.getComboBoxMoedas().getItemAt(index);
         System.out.println(moeda);
-        
+        //valor iniciado
         double valorDouble =0;
         try{
             valorDouble = Double.parseDouble(valor);
@@ -263,30 +317,48 @@ public class Controller {
         }catch(NumberFormatException e){
             menu.getTxtValorCompra().setText("Digite apenas numeros");
         }
+        //pegando o objeto da moeda pela carteira usando o metodo getMoeda que passaos o indice como parametro
         Moedas moedaSelecionada = carteiraAtual.getMoeda(index);
-        
+        //calculo de valor de compra
         double valorDeCompra =valorDouble*moedaSelecionada.getCotacaoAtualParaReal()
                 *moedaSelecionada.tarifaCompra();
+        //mostrando na tela o valor de compra
         menu.getLblDisplayValorCompra().setText(String.format("R$:%.2f",valorDeCompra));
         
     }
     public void venderMoedas(){
+        //para vender moeda ele vai pedir a senha e caso o metodo retorne verdadeiro 
+        //ele entra no controle de fluxo e os comando desejados sao executados
         if(pedirSenha()){
+            //ele vai pegar o indice da combobox 
             int index = menu.getComboBoxMoedas().getSelectedIndex();  
+            //se o indice slecionado for o mesmo que o calculado, ele vai seguir a logica
             if(index == indiceMoedaVenda && fracaoDeVenda !=0){
+                //ele vai pegar os valores dos reais da carteira, e da fracao da moeda usando o get
                 double reaisCarteira = carteiraAtual.getReal().getQuantidade();
                 double fracaoMoeda = carteiraAtual.getMoeda(index).getQuantidade();
+                //caso a fracao que ele possua seja maior que a que ele deseja vender
+                //a logica continua
                 if(fracaoMoeda>fracaoDeVenda){
+                    //mensagem de confirmacao
                     int confirmou = JOptionPane.showConfirmDialog(menu, "Confimar-se gostaria realmente de vender");
+                    //casos ele tenha confirmado o retorno sera 0 entao caso 
+                    //confirmou seja 0 ele continua a trasacao
                     if(confirmou ==0){
+                        //conta para somar o valor nos reais da carteira
                         reaisCarteira += (fracaoDeVenda*carteiraAtual.getMoeda(index).
                                 getCotacaoAtualParaReal()*carteiraAtual.getMoeda(index)
                                         .tarifaVenda());
+                        //conta para subtrair a fracao da carteira
                         fracaoMoeda-=fracaoDeVenda;
+                        //ele vai setar a quantidade da fracao da moeda e reais nova
                         carteiraAtual.getMoeda(index).setQuantidade(fracaoMoeda);
                         carteiraAtual.getReal().setQuantidade(reaisCarteira);
                         System.out.println(carteiraAtual);
                         try{
+                            //neste bloco try el vai fazer o salvamento da transacao no extrato
+                            //e vai atualizar a tabela carteira usando os metodos do objeto
+                            //da classe PessoaDAO
                             pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"vendeu",
                             fracaoDeVenda,carteiraAtual.getMoeda(index).tarifaVenda(),
                             reaisCarteira,menu.getComboBoxMoedas().getItemAt(index)));
