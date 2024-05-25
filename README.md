@@ -16,6 +16,8 @@ O package controller, que gerencia o fluxo de informações entre view e model.
 E o package exchangecripto que possui a classe main do programa.
 Também foi utilizada a biblioteca postgresql-42.7.3.jar, necessária para realizar a conexão do usuário com o banco de dados.
 
+Projeto de: Giovanni Morassi (giovanni1351) e Lucas Roberto (uniflusantos)
+
 English:
 The Exchange Criptomoedas is a project that consists in a cryptocurrency based bank system developed in Java, integrated with an SQL database through the PostgreSQL system and the software pgAdmin4. The bank works with a GUI, that follows the MVC architeture, in which the user is presented with all the functions of the program once he registers an account
 or logs in (in case he has already registered an account). The bank also works with two different types of users, the normal client and the admin. The functions available for each are:
@@ -34,4 +36,4 @@ The controller package, which manages the information flow between view and mode
 And the exchangecripto package which holds the program's main class.
 We also used the library postgresql-42.7.3.jar, which is necessary to successfuly make the connection between the user and the database.
 
-
+Project by: Giovanni Morassi (giovanni1351) and Lucas Roberto (uniflusantos)
