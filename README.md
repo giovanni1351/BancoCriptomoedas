@@ -4,10 +4,9 @@ do programa após realizar cadastro ou fazer login (caso já tenha cadastrado um
 Para clientes normais: Efetuar login/cadastro, Consultar saldo (em reais e em todas as criptomoedas disponíveis) da carteira de investimentos, consultar seu extrato de operações da carteira de investimentos, depositar valores (em reais) na carteira de investimentos, sacar valores (em reais) da carteira de investimento. comprar e vender criptomoedas e atualizar
 a cotação das criptomoedas. O programa, por padrão, já possui três criptomoedas cadastradas (Bitcoin, Ethereum e Ripple), as quais o usuário pode comprar utilizando o saldo que possui em reais, também podendo vendê-las por um valor em reais.
 Para o administrador: Efetuar login, cadastrar novos investidores, excluir investidores, cadastrar e excluir novas criptomoedas, listar todos os investidores cadastrados, consultar dados de todos os investidores (que incluem extrato e saldo) e atualizar a cotação das criptomoedas.
-Todas as ações realizadas no programa são atualizadas juntamente ao banco de dados. Nos arquivos disponíveis no Github, está incluso um script com os dados do banco de dados de teste (que já possui uma série de informações cadastradas) e um vazio, caso o usuário deseje iniciar o seu do zero. Os scripts são executados pelo pgAdmin 4, sendo necessário possuir
-o PostgreSQL instalado.
+Todas as ações realizadas no programa são atualizadas juntamente ao banco de dados. No repositório, está incluso um script que pode ser executado para a criação do banco de dados no pgAdmin4, necessitando ter o PostgreSQL instalado.
 Para executar o programa, basta realizar o download do executável .jar e executá-lo, lembrando que, para o funcionamento próprio do programa, é necessário possuir o Java, o PostgreSQL e o pgAdmin 4 (com o banco de dados construído).
-Caso deseje compilar o código por meio de alguma IDE ou terminal, as mesmas condições se aplicam.
+Caso deseje compilar o código por meio de alguma IDE ou terminal, as mesmas condições se aplicam. É possível que seja pedida a instalação da biblioteca postgrgesql-42.7.3.jar, que pode ser facilmente encontrada na internet.
 
 No desenvolvimento do código, foram utilizados 5 packages.
 O package DAO, que possui duas classes: Conexao, realiza a conexão do usuário com a database e PessoaDAO que realiza a consulta e manipulação de dados na database. 
@@ -23,10 +22,9 @@ or logs in (in case he has already registered an account). The bank also works w
 For the normal clients: Log in/Register Account, Check bank balance (in reais (brazilian currency) and in all cryptocurrencies available) of your investment wallet, check the bank statement of your investment wallet, make deposits (in reais) to your investment wallet, draw money (also from your balance in reais) from your investment wallet, buy and sell 
 cryptocurrencies and update the price of the cryptocurrencies. The program already comes with three cryptocurrencies registered (Bitcoin, Ethereum and Ripple), which the user is able to buy with the money from his current balance in reais and sell for an amount also in reais.
 For the admin: Log in, register new investors, delete investors, register and delete new cryptocurrencies, list all registered investors, check the data of all investors (which includes their bank statement and current balance), and manually update the quotation of the cryptocurrencies.
-All the actions you make in the program are updated alongside the database. In the files available on the Github page, we included a script with the data from our test database (which already has a bunch of information registered) and an empty one, if you wish to start yours from scratch. The scripts are to be executed through pgAdmin 4, and it is necessary
-to have the PostgreSQL installed.
+All the actions you make in the program are updated alongside the database. In repo page, we included a script that can be executed through pgAdmin4 to create the database used in the program. You need to have PostgreSQL installed for it to work properly.
 To run the program, just download the executable .jar file and run it. Reminder: For the proper functioning of the program, it is necessary to have Java, PostgreSQL and pgAdmin 4 (with the database built) installed.
-If you wish to compile the code through an IDE or your terminal, the same conditions apply.
+If you wish to compile the code through an IDE or terminal, the same conditions apply. It is possible that you are requested to install the postgresql-42.7.3.jar library, which can be easily found on the internet.
 
 5 packages were used to develop the code.
 The DAO package, which includes two classes: Conexao, which makes the connection between the user and the database, and PessoaDAO, which checks and manipulates the data from the database.
