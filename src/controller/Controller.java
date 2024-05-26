@@ -443,8 +443,6 @@ public class Controller {
         var lblsaldocripto = menu.getLblSaldoCripto();
         lblsaldo.setText(String.format("Saldo atual:%.2f",carteiraAtual.getReal().getQuantidade()));
         lblNomeMoeda.setText(menu.getComboBoxMoedas().getItemAt(index));
-        //Fração:
-        //Preco unidade:
         Moedas moedaSelecionada = carteiraAtual.getMoeda(index);
         lblfracaoAtual.setText(String.format("Fração:%.10f",moedaSelecionada.getQuantidade()));
         lblcotacaoMoeda.setText(String.format("Preco unidade:%.2f",moedaSelecionada.getCotacaoAtualParaReal()));
@@ -454,9 +452,13 @@ public class Controller {
 
     }
     public void verificaSenhaEMostraInfo(){
+        //pega o objeto do botao togle e usa o metodo para saber se esta ativo ou nao
         var botao = menu.getToggleMostraInfos().isSelected();
+        //verifica se o botao está ativo ou n
         if(botao){
+            //caso seja ativado ele vai pedir a senha e mostrará as infomações atualizadas
             String senha  = JOptionPane.showInputDialog(menu, "Digite sua senha");
+            
             long senhaLong =0;
             try{
                 senhaLong= Long.parseLong(senha);
@@ -465,18 +467,24 @@ public class Controller {
 
                 JOptionPane.showMessageDialog(menu, "Digite apenas numeros");
             }
+            //caso a senha estaja correta ele vai chamar o metodo que printa a informações na tela
             if(senhaLong == userAtual.getSenha()){
                 informacoesUsuario();
             }
         }else{
+            //
             informacoesUsuario();
 
         }
     }
     
     public void atualizaCotacao(){
+        //primeira mente ele vai chamar a funcao de atualizar saldo na tela
         atualizaSaldoTela();
+        //depois o texto que vai ser mostrado no menu
         String texto = "";
+        //aqui ele vai percorrer todas as moedas e vai colocar na variavel texto
+        
         for(int x = 0 ; x <quantidadeDeMoedas;x++){
             carteiraAtual.getMoeda(x).atualizaCotacao();
             String nome = carteiraAtual.getMoeda(x).getNome();
@@ -484,10 +492,13 @@ public class Controller {
             String atual = String.format("%s = %.2f \n",nome,cotacao);
             texto+=atual;
         }
+        //ele vai setar na textArea
         menu.getTxtMostrarCotacaoMoedas().setText(texto);
     }
     public void depositarReais(){
+        //funcao para depositar Reais, vai pedir senha... ver se é a correta
         if(pedirSenha()){
+            //vai pegar o valor que quer depositar
             String valorDeposito = menu.getTxtValorDeposito().getText();
             double valor = 0;
             try{
@@ -495,18 +506,26 @@ public class Controller {
             }catch(NumberFormatException e){
                 menu.getTxtValorDeposito().setText("Digite apenas numeros");
             }
-            if(valor>0){
+            //vai verificar esse valor depois de convertido para double
+            if(valor>=0){
+                //ele vai pegar os reais que ja tem na carteira
                 double realAtual = carteiraAtual.getReal().getQuantidade();
+                //vai somar com o valor que foi desejado no deposito
                 realAtual +=valor;
+                //vai setar na carteira
                 carteiraAtual.getReal().setQuantidade(realAtual);
                 try{
+                    //vai chamar a funcao que vai lancar para o banco de dados
                     pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
+                    //vai chamar o metodo que vai lançar essa transação no extrato
+                    //para a tabela de extrato do banco de dados
                     pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"Depositou",valor,0,realAtual,"Reais"));
                     JOptionPane.showMessageDialog(menu, "Depositou "+valor+" com sucesso!");
                 }catch(SQLException e){
                     JOptionPane.showMessageDialog(menu,"Erro de SQL: "+e);
                 }
-
+                //depois ele chama a funcao de atualizar a cotacao na tela para ja 
+                //mostrar o valor atualizado na tela
                 atualizaCotacao();
             }else{
                 JOptionPane.showMessageDialog(menu,"Digite um valor positivo safado");
@@ -515,7 +534,10 @@ public class Controller {
         
     } 
     public void sacarReais(){
+        //funcao para a implementacao do saque
+        //ele vai pedir a senha, caso seja correta ele faz a operacao
         if(pedirSenha()){
+            //ele vai pegar o valor do txt field
             String valorTexto = menu.getTxtValorParaSacar().getText();
             double valor = 0;
             try{
@@ -524,11 +546,13 @@ public class Controller {
                 menu.getTxtValorParaSacar().setText("Digite apenas numeros");
             }
             double reaisAtual = carteiraAtual.getReal().getQuantidade();
-
+            //se o valor é menor ou igual e o valor é possitivo, ele pode realizar a operacao
             if(valor<=reaisAtual && valor>=0&& valor <=1e20){
                 reaisAtual-=valor;
                 carteiraAtual.getReal().setQuantidade(reaisAtual);
                 try{
+                    //aqui ele salva tudo no banco de dados, salva a carteira, e depois 
+                    //coloca o extrato
                     pessoaDAO.atualizarCarteira(userAtual.getId(), carteiraAtual);
                     pessoaDAO.addExtrato(userAtual.getId(), new Extrato(null,"Sacou",valor,0,reaisAtual,"Reais"));
                     JOptionPane.showMessageDialog(menu, "Sacou "+valor+" Com sucesso!");
@@ -546,6 +570,10 @@ public class Controller {
     }
     
     public void cadastrarInvestidorADM(){
+        //aqui é a funcao de cadastrar um investidor pelo menu de adm
+        //ele vai pegar as informações dos texts labels e usar a funcao do dao
+        //ele vai criar um registro na tabela de usuarios e na tabela da carteira
+        
         String cpf = menuADM.getTxtCadastroCPF().getText();
         String senha =menuADM.getTxtCadastroSenha().getText();
         String nome = menuADM.getTxtCadastroNome().getText();
@@ -574,6 +602,8 @@ public class Controller {
         }       
     }
     public void deletarUsuario(){
+        //ele vai pegar o cpf e dar um select na tabela, e depois deletar
+        //o select na tabela é uma funcao que esta na DAO
         String cpf = menuADM.getTxtCPFDeletar().getText();
         long cpfLong =0;
         try{
@@ -613,14 +643,19 @@ public class Controller {
         }
     }
     public void mostrarTodosUsuarios(){
+        //nesta funcao ele vai dar um select all em todos da tabela
+        //usuario é o result set que vai ser retornado pela funcao DAO
         
         ResultSet usuarios;
+        //aqui é o model da tabela para alterar no menu
         var tabela = menuADM.getTabelaUsuarios().getModel();
         List<Pessoa> listaUsuarios = new ArrayList<>();
         
 
         try{
+            //aqui ele chama a funcao e atribui o retorno na variavel declarada acima
             usuarios = pessoaDAO.consultarListaDeUsuarios();
+            //nesse while ele vai ler o resutset e colocar na arraylust
             while(usuarios.next()){
                 long idAtualLista = usuarios.getLong(1);
                 String nomeAtualLista = usuarios.getString(2);
@@ -636,6 +671,7 @@ public class Controller {
                 }
                 
             }
+            //ele vai limpar a tabela
             for(int x = 0 ;x < 50;x++){
                 tabela.setValueAt("",x,0);
                 tabela.setValueAt("",x,1);
@@ -643,6 +679,7 @@ public class Controller {
                 tabela.setValueAt("",x,3);
 
             }
+            //ele vai escrever na tabela
             for(int x = 0 ;x < listaUsuarios.size();x++){
                 var atual = listaUsuarios.get(x);
                 tabela.setValueAt(atual.getId(),x,0);
@@ -659,13 +696,17 @@ public class Controller {
         
     }
     public void admMostraInfomarcoesUsuariosADM(){
+        //nesta funcao ele vai ver o extrato e ver a carteira de um usuario aa
+        //partir de um cpf que foi digitado pelo administrador para fazer a consulta
+        
+        //ele pega o model das tabelas e cria as arraylist e pega tbm o cpf digitado
         var tabelaCarteira = menuADM.getTabelaCarteiraConsulta().getModel();
         var tabelaExtrato = menuADM.getTabelaExtrato().getModel();
         String cpfString = menuADM.getTxtCPFConsultarExtrato().getText();
         ArrayList<Extrato> extratoAtual = new ArrayList<>();
         ArrayList<Moedas> carteiraAtual = new ArrayList<>();
         
-
+        //converte para long o cpf
         long cpf =0;
         try{
             cpf= Long.parseLong(cpfString);
@@ -673,9 +714,12 @@ public class Controller {
             menuADM.getTxtCPFConsultarExtrato().setText("Digite apenas numeros");
         }
         try{
+            //procura o id com o cpf
             long idAchado = pessoaDAO.acharIDpeloCPF(cpf);
+            //procura o extrato usando o id achado
             ResultSet resExtrato = pessoaDAO.consultarTabelaExtrato(idAchado);
             System.out.println("pegou o resultset ");
+            //coloca o extrato na arraylist
             while(resExtrato.next()){
                 var data = resExtrato.getDate(2);
                 String op = resExtrato.getString(3);
@@ -686,6 +730,7 @@ public class Controller {
                 extratoAtual.add(new Extrato(data,op,valor,taxa,saldo,moeda));
                 System.out.println("adicionou na array list do extrato");
             }
+            //limpa a tabela
             for(int x = 0 ; x < 90;x++){
                 
                 tabelaExtrato.setValueAt("", x, 0);
@@ -696,6 +741,7 @@ public class Controller {
                 tabelaExtrato.setValueAt("", x, 5);
                 
             }
+            //preencje a tabela com o extrato
             for(int x = 0 ; x < extratoAtual.size();x++){
                 Extrato a = extratoAtual.get(x);
                 tabelaExtrato.setValueAt(a.getData(), x, 0);
@@ -706,7 +752,7 @@ public class Controller {
                 tabelaExtrato.setValueAt(a.getSaldo(), x, 5);
                 
             }
-            
+            //pega a carteira usando o id
             ResultSet resCarteira = pessoaDAO.consultarTabelaCarteira(idAchado);
             if(resCarteira.next()){
                 carteiraAtual.add(new Generica(resCarteira.getDouble(5),"Reais"));
@@ -720,11 +766,12 @@ public class Controller {
                     carteiraAtual.add(new Generica(valor ,nomeGenerica));
                 }
             }
-            
+            //limpa a tabela 
             for(int x = 0 ; x < 90;x++){
                 tabelaCarteira.setValueAt("", x, 0);
                 tabelaCarteira.setValueAt("", x, 1);
             }
+            //printa na tabela
             for(int x = 0 ; x < carteiraAtual.size();x++){
                 var atual = carteiraAtual.get(x);
                 tabelaCarteira.setValueAt(atual.getNome(), x, 0);
@@ -738,6 +785,10 @@ public class Controller {
         }
     }
     public void adicionarMoedasADM(){
+        //funcao para adicionar moedas
+        //primeiro ele vai pegar todas as infomaçoes 
+        //depois ele vai convertar as taxas para double
+        //e depois vai chamar um metodo do DAO para adicionar na tabela
         String nomeCrip = menuADM.getTxtNomeCripto().getText();
         String taxaCompraStr = menuADM.getTxtTaxaCompra().getText();
         String taxaVendaStr = menuADM.getTxtTaxaVenda().getText();
@@ -762,6 +813,8 @@ public class Controller {
         
     }
     public void deletarMoedaADM(){
+        //para deletar ele vai chamar um metodo do DAO que vai deletar usando uma
+        //condição where para dizer que é o nome tal que vai ser deletado
         String nomeMoeda = menuADM.getTxtNomeDeletarMoeda().getText();
         try{
             pessoaDAO.removeMoedaDaTabela(nomeMoeda);
@@ -772,9 +825,11 @@ public class Controller {
     }
     
     public void informacoesUsuario(){
+        //ele vai pegar a tabela
+        //e depois o botao e ver se esta selecionado
         var tabelaCarteira = menu.getTabelaCarteiraConsulta().getModel();
         var botao = menu.getToggleMostraInfos().isSelected();
-
+        //limpando a tabela
         var valorReal = menu.getLblValorReais();
         valorReal.setText(String.format("Reais : %.2f", carteiraAtual.getReal().getQuantidade()));
         for(int x = 0 ; x < 90;x++){
@@ -783,6 +838,7 @@ public class Controller {
             tabelaCarteira.setValueAt("", x, 2);
         }
         if(botao){
+            //se o botao estiver ativo ele vai digitar as informaçoes
             for(int x = 0 ; x <quantidadeDeMoedas;x++){
                 var atual = carteiraAtual.getMoeda(x);
                 tabelaCarteira.setValueAt(atual.getNome(), x, 0);
@@ -795,6 +851,9 @@ public class Controller {
     }
     
     public boolean pedirSenha(){
+        //funcao para pedir a senha, ela vai retornar true caso esteja correta
+        //primeiro ele vai usar um JOptionPane para pegar o input da senha
+        //ele vai converter para long, e verificar com a senha do usuario atual
         String senhaPedida = JOptionPane.showInputDialog("Digite sua senha");
         long senha =0;
         try{
@@ -806,7 +865,7 @@ public class Controller {
             return true;
         }else{
             JOptionPane.showMessageDialog(menu, "Senha incorreta");
-
+            //retorno falso para senha incorret
             return false;
         }
     }

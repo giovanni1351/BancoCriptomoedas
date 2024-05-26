@@ -22,12 +22,17 @@ import model.Pessoa;
  */
 public class PessoaDAO {
     private final Connection conn;
-    private final ArrayList<String> moedas = new ArrayList<>();
+    
     public PessoaDAO(Connection conn) {
+        //contrutor que recebe um objeto connection
         this.conn = conn;
     }
     
     public long cadastrar(Pessoa pessoa) throws SQLException{
+        //funcao para cadastrar uma pessoa, ela vai receber um objeto do tipo pessoa
+        //que contem todas as informaçoes necessarias para substituir nas colunas do
+        //bancod de dados, que para isso, é usado um metodo da classe PreparedStatement
+        //que serve para substituir os valores nos comando 
         String sqlInsert = "INSERT INTO public.\"Pessoa\"(\"Nome\",\"CPF\",\"Senha\")"
                 + "VALUES (?,?,?)";
         PreparedStatement state = conn.prepareStatement(sqlInsert);
@@ -51,6 +56,7 @@ public class PessoaDAO {
     }
             
     public ResultSet consultar(Pessoa Usuario) throws SQLException{
+        //metodo para retornar a tabela de consulta da tabela Pessoa    
         String sql = "select * from public.\"Pessoa\" where \"CPF\" = ? and \"Senha\" = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setLong(1, Usuario.getCPF());
@@ -61,6 +67,9 @@ public class PessoaDAO {
     }
         
     public ResultSet consultarTabelaExtrato(long id) throws SQLException{
+//metodo para retornar a tabela de consulta da tabela extrato buscando pelo id
+                
+
         String sql = "select * from \"Extrato\" where \"PessoaID\" = ? ORDER BY \"numeroRegistro\" DESC ";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setLong(1, id);
@@ -69,6 +78,8 @@ public class PessoaDAO {
         return resultado;
     }
     public ResultSet consultarTabelaCarteira(long id) throws SQLException{
+//metodo para retornar a tabela de consulta da tabela carteira buscando pelo id
+
         String sql = "select * from \"Carteira\" where \"PessoaID\" = ? ";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setLong(1, id);
@@ -77,25 +88,22 @@ public class PessoaDAO {
         return resultado;
     }
     public void cadastrarCarteira(long id) throws SQLException{
+//metodo para realizar um comando de insert into, ou seja, adicionar um registro na tabela
+//aqui neste caso ele vai inserir uma carteira nova, onde só é passado o id como dados
+
         String sql = "INSERT INTO public.\"Carteira\"(\"PessoaID\")\n VALUES (?);";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setLong(1, id);
         statement.execute();
     }
 
-    public void atualizarColunaCarteira(long id,String nome,double valor) throws SQLException{
-        String sql = "UPDATE public.\"Carteira\""+
-	"SET  ?=?"+
-	"WHERE \"PessoaID\"=?;";
-        PreparedStatement comando = conn.prepareStatement(sql);
-        comando.setString(1,nome);
-        comando.setDouble(2, valor);
-        comando.setLong(3,id);
-        comando.execute();
-
-    }
     public void atualizarCarteira(long id,Carteira user) throws SQLException{
-        
+//funcao que recebe uma carteira e um id, que vai servir para atualizar todas as informaçoes
+//ele vai usar um where para dizer qual registro ele vai atualizar usando o ID como referencia
+//depois ele vai passar os parametros e vai aplicar o comando, nesta funcao como podemos ter 
+//mas na carteira tem como ter mais que apenas as colunas das moedas normais, então para isso
+//usando os metodos para pegas as moedas genéricas, colocamos a partir de um for
+//mais colunas como argumento até terminar de criar o comando, depois é só executar
         String sql1 = "UPDATE public.\"Carteira\" SET ";
         String sql2 = """
                "Bitcoin" = ?,
@@ -123,6 +131,8 @@ public class PessoaDAO {
         
     }
     public void addExtrato(long id,Extrato extrato) throws SQLException{
+//funcao para adicionar o regsitro do extrato na tabela, é necessário receber o id
+//para a identificar qual pessoa pessoa é pelo id
         String sql = """
                      INSERT INTO public."Extrato"(
                      \t"PessoaID", "Data", operacao, valor, taxa, moeda, saldo)
@@ -137,6 +147,7 @@ public class PessoaDAO {
         comando.execute();
     }
     public ResultSet consultarListaDeUsuarios() throws SQLException{
+//metodo para retornar a tabela que representa a lista dos usuarios
         String sql="""
                    SELECT "PessoaID", "Nome", "CPF", "Senha", "IsADM"
                    	FROM public."Pessoa";
@@ -147,6 +158,7 @@ public class PessoaDAO {
     }
     
     public ResultSet procurarPeloCPF(long cpf) throws SQLException{
+//retorna o resultset que representa o registro da tabela pessoa procurado pelo cpf
         String sql ="""
                        SELECT "PessoaID", "Nome", "CPF", "Senha", "IsADM"
                         	FROM public."Pessoa"
@@ -160,6 +172,8 @@ public class PessoaDAO {
         return resultado;
     }
     public boolean procurarExistenciaPeloCPF(long cpf) throws SQLException{
+//aqui ele vai apenas retorna que existe esta pessoa ou não procurando na tabela
+//pelo cpf
         String sql ="""
                        SELECT "PessoaID", "Nome", "CPF", "Senha", "IsADM"
                         	FROM public."Pessoa"
@@ -173,6 +187,8 @@ public class PessoaDAO {
         return resultado.next();
     }
     public long acharIDpeloCPF(long CPF) throws SQLException{
+//ele vai usar o cpf para achar o registro e vai pegar a coluna do id para retornar
+//com isso usar esse id em outras funções
         String sql = """
                      SELECT "PessoaID"
                      FROM public."Pessoa"
@@ -191,6 +207,7 @@ public class PessoaDAO {
         }
     }
     public boolean deletarUsuario(long cpf){
+//funcao para deletar um usuario pelo cpf
         String sql = """
                      DELETE FROM public."Pessoa"
                      	WHERE "CPF" = ?;
@@ -205,6 +222,8 @@ public class PessoaDAO {
         }
     }
     public boolean deletarUsuarioCarteira(long cpf){
+//deletar a carteira do usuario recebendo um cpf de parametro, para que possa 
+//usar no where como filtro para teletar corretamente
         String sql = """
                      DELETE FROM public."Carteira"
                      	WHERE "PessoaID" = ?;
@@ -226,6 +245,10 @@ public class PessoaDAO {
         }
     }
     public void addMoedaNaTabela(Generica moeda) throws SQLException{
+//funcao para dar un insterrt da moeda na tabela de moedas onde armazena os valores
+//da taxa e o nome, e depois colocar uma nova coluna na tabela da carteira para
+//que cada registro contenha seu valor armazenado, cada usuario ter sua carteira
+//com todas os saldos das moedas
         String sql = """
                      INSERT INTO public.moedas(
                      	nome, taxavenda, taxacompra)
@@ -246,6 +269,8 @@ public class PessoaDAO {
         System.out.println("moeda adicionada na carteira");
     }
     public void removeMoedaDaTabela(String nome) throws SQLException{
+//ele vai remover um registro da tabela moedas e remover uma coluna pelo nome na 
+//tabela da carteira
         String sql = """
                         DELETE FROM public.moedas
                             WHERE "nome" = ?;
@@ -263,6 +288,7 @@ public class PessoaDAO {
     }
     
     public ResultSet consultaMoedasGenericas() throws SQLException{
+        //apenas um select para retornar um resultset de todas as moedas
         String sql = """
                         SELECT * FROM moedas
                      """;
