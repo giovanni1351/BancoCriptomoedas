@@ -379,19 +379,33 @@ public class Controller {
         }
     }
     public void comprarMoedas(){
+        // vai chamar a funcao pedirSenha que retorna true caso esteja correta
         if(pedirSenha()){
+            //dentro deste controle de fluxo, a funcao vai pedar o indice que 
+            //foi selecionado pela combobox
             int index = menu.getComboBoxMoedas().getSelectedIndex();  
-            if(index == indiceMoedaCompra && fracaoDeCompra >0){
+            if(index == indiceMoedaCompra && fracaoDeCompra >=0){
+                //depois de pegar o indice e verificar se é o mesmo que ja foi 
+                //selecionado quando foi fazer o calculo, e a fracao de compra é positiva
+                //ele vai pegar o objeto da moeda atual usando o metodo getMoeda que recebeo indice
+                //e retona uma moeda da carteira 
                 Moedas moedaAtual= carteiraAtual.getMoeda(index);
+                //calcular valor
                 double valorEmReais = fracaoDeCompra * moedaAtual.getCotacaoAtualParaReal();
                 valorEmReais*=moedaAtual.tarifaCompra();
+                //print para debug
                 System.out.println("Valor da compra: "+valorEmReais);
+                //pegando o valor atual de reais
                 double reaisAtual = carteiraAtual.getReal().getQuantidade();
                 double fracaoMoedaAtual = carteiraAtual.getMoeda(index).getQuantidade();
-
+                //verifica se o valor em reais é menor que o reais atual
                 if(valorEmReais< reaisAtual){
+                    //casos seja
+                    //mensagem para confirmação
                     int confirmou = JOptionPane.showConfirmDialog(menu, "Gostaria mesmo de comprar?");
                     if(confirmou ==0){
+                        //fazer as conta para atualizar a carteira atual e com isso depois 
+                        //atualizar usando os metodos do DAO que lancam para o banco de dadso
                         carteiraAtual.getReal().setQuantidade(reaisAtual-valorEmReais);
                         carteiraAtual.getMoeda(index).setQuantidade(fracaoMoedaAtual+fracaoDeCompra);
                         try{
@@ -415,9 +429,13 @@ public class Controller {
         }
     }
     public void atualizaSaldoTela(){
+        //nesta funcao vamo chamar primeiramente a funcao de printar na tela
         informacoesUsuario();
+        //pega o indice da combo box
         int index = menu.getComboBoxMoedas().getSelectedIndex();
+        //printa o indice da combo box
         System.out.println(index);
+        //pega os objetos das labels e troca o text usando o setText para o valor e string desejado
         var lblNomeMoeda = menu.getLblNomeMoedaOlhada();
         var lblsaldo = menu.getLblSaldoAtual();
         var lblfracaoAtual = menu.getLblFracaoAtual();
